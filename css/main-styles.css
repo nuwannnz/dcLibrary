@@ -1,0 +1,80 @@
+/* GLOBAL STYLES */
+
+@font-face{
+    font-family: dosis-bold;
+    src : url('../resources/fonts/dosis/dosis-bold.ttf');
+}
+
+@font-face{
+    font-family: dosis-regular;
+    src : url('../resources/fonts/dosis/dosis-regular.ttf');
+}
+
+@font-face{
+    font-family: dosis-light;
+    src : url('../resources/fonts/dosis/dosis-light.ttf');
+}
+
+.site-font-b{
+    font-family: dosis-bold;
+}
+
+.site-font-r{
+    font-family: dosis-regular;
+}
+
+.site-font-l{
+    font-family: dosis-light;
+}
+
+*{
+    /*default font for all elements*/
+    font-family: dosis-regular;
+}
+
+.font-large{
+    font-size: 30px;
+}
+
+.font-medium{
+    font-size: 20px;
+}
+
+.font-small{
+    font-size: 14px;
+}
+
+.float-left{
+    float: left;
+}
+
+.float-right{
+    float: right;
+}
+
+.clear-fix{
+    clear: both;
+}
+
+.center-align-in{
+    text-align: center;
+}
+
+.center-align-bl{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/*colors*/
+.site-accent{
+
+}
+
+.site-accent-bg-dark{
+
+}
+
+.site-accent-fg{
+
+}
+/* END OF GLOBAL STYLES */
