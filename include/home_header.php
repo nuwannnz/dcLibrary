@@ -21,7 +21,7 @@
                         </a>
                     </div> <!-- end of logo container-->
 
-                    <div style="position:absolute;right:0px;top:50%;margin-top:-15px;" >
+                    <div style="position:absolute;right:10px;top:50%;margin-top:-15px;" >
                         <ul class="menu">
                             <li><a class="border-button" href="#">Sign up</a></li>
                             <li><a class="border-button" href="#">Sign in</a></li>

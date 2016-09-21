@@ -99,6 +99,7 @@ body{
 .root-container{
     width:100%;
     min-height:850px;
+    min-width: 720px;
     background-color: #f1f1f1;
 }
 

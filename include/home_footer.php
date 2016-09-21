@@ -4,7 +4,7 @@
                         <li><a class="link-button" href="#">Contact us</a></li>
                         <li><a class="link-button" href="#">Help</a></li>
                     </ul>
-                    <span class="site-accent-fg" style="position:absolute;top:5px;right:0px;" >&copy dcLibrary 2016</span>     
+                    <span class="site-accent-fg" style="position:absolute;top:5px;right:10px;" >&copy dcLibrary 2016</span>     
                 </div>
             </div> <!-- end of footer-->
         </div> <!-- end of root container-->
