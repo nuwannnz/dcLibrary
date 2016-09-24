@@ -34,6 +34,10 @@
     font-family: dosis-light;
 }
 
+.site-font-m{
+    font-family: dosis-medium;
+}
+
 *{
     /*default font for all elements*/
     font-family: dosis-regular;
@@ -82,7 +86,7 @@
 }
 
 .site-accent-bg-dark{
-    background-color:#1C88E3;
+    background-color:#222233;
 }
 
 .site-accent-fg{
@@ -142,11 +146,12 @@ ul.menu li{
     padding-top: 4px;
     border-radius: 5px;
     font-family: dosis-medium;
+    transition: background-color 0.5s,color 0.5s;;
 }
 
 .border-button:hover{
     background-color: #fff;
-    color: #1C88E3;
+    color: #222233;
     
 }
 
@@ -161,5 +166,15 @@ ul.menu li{
 .link-button:hover{
     text-decoration: underline;
     
+}
+
+.error-message-container{
+    min-width: 300px;
+    max-width: 600px;
+    text-align: center;
+    background: #fd8c84;
+    color: #bd0000;
+    padding: 10px;
+    display: none;
 }
 

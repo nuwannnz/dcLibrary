@@ -14,6 +14,7 @@ $paths = array(
     "functions" => $root . "/functions",
     "templates" => $root . "/templates",
     "resources" => $root . "/resources",
+    "submit_forms" => $root . "/submit_forms",
     "user" => $root . "/user",
     "public" => $root . "/public",
     "admin" => $root . "/admin",
@@ -24,7 +25,7 @@ $database = array(
     "hostname" => "127.0.0.1",
     "username" => "root",
     "password" => "",
-    "database" => "library_db",
+    "database" => "dc_library",
 );
 
 
