@@ -14,27 +14,31 @@ input{
     position: relative;
 }
 
-input:focus{    
-    outline-style: solid;
-    outline-color: #222233;
-    outline-width: thin;
-}
 
 input[type=text],input[type=email],input[type=password]{
     width: 300px;
     height: 30px;    
-    border:0.5px solid #222233;
+    border:0.5px solid #c7c7c7;
+    outline: 0px;
 }
 
 input[type=submit]{
     width: 314px;
     height: 44px;
-    border: 0px;    
-    margin-bottom: 10px;        
+    border: 1px solid #222233;  
+    background-color: #fff;  
+    margin-bottom: 10px;       
+    cursor: pointer; 
 }
 
 input[type=submit]:hover{
-    background-color: #393956;
+    background-color: #222233;
+    color:#fff;
+}
+
+input:focus{        
+    border:0.5px solid #222233;
+    
 }
 
 .error-text{

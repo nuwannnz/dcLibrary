@@ -5,6 +5,8 @@ This file contains all the global data for the rest of application.
 */
 
 $root = $_SERVER['DOCUMENT_ROOT'] . "/dashboard/diwe_final/site";
+$project_root = "/dashboard/diwe_final/site";
+
 $paths = array(
     "images" =>  $root . "/images",
     "scripts" =>  $root . "/js",
@@ -18,6 +20,11 @@ $paths = array(
     "user" => $root . "/user",
     "public" => $root . "/public",
     "admin" => $root . "/admin",
+);
+
+$header_paths = array(
+    "templates" => $project_root . "/templates",
+    "public" => $project_root . "/public",
 );
 
 //details about the database connection

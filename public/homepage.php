@@ -1,6 +1,6 @@
 <?php require_once('../config.php') ?>
 
-<?php include_once('../dummy_data.php') ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
