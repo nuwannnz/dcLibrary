@@ -12,8 +12,8 @@ require_once($paths['include'] . '/connection.php');
 //createGenres();
 //createBooks();
 //createBookAuthors();
-createBookCheckouts();
-createBookCheckins();
+//createBookCheckouts();
+//createBookCheckins();
 
 $description_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porta ipsum at elit porta, at tempor nulla consectetur. Quisque eget libero ac mauris posuere aliquam nec non eros. Quisque turpis lorem";
 

@@ -6,8 +6,8 @@
         <title>dcLibrary</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="<?php echo $header_paths['css'] . '/main-styles.css'; ?>" rel="stylesheet">
-        <link href="<?php echo $header_paths['css'] . '/home-template-styles.css'; ?>" rel="stylesheet">      
+        
+        <?php require_once($paths['include'] . '/home_links.php') ?>
     </head>
 
     
