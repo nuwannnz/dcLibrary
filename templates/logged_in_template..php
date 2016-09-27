@@ -20,7 +20,7 @@
                 <div class="content center-align-bl" style="min-height:50px;position:relative;" >
 
                     <div class="logo-container" style="margin-top:-18px;">
-                        <a href="homepage.php">
+                        <a href="<?php echo $header_paths['public'] . '/homepage.php' ?>">
                             <span class="site-font-l logo-medium site-accent-fg">dc<span class="site-font-b">Library</span></span>
                         </a>
                     </div> <!-- end of logo container-->
@@ -37,8 +37,8 @@
                     
                     <div style="margin-top: -50px;height: 50px;max-width: 300px;margin-left: 500px;" >
                         <ul class="menu" style="padding-top:9px;">
-                            <li><a class="borderless-button" href="register.php">Explore</a></li>
-                            <li><a class="borderless-button" href="login.php">My books</a></li>
+                            <li><a class="borderless-button" href="#">Explore</a></li>
+                            <li><a class="borderless-button" href="#">My books</a></li>
                         </ul>
                     </div>
 
@@ -74,4 +74,15 @@
 
 </div><!-- end of content container-->
 
-<?php require_once($paths['include'] . '/home_footer.php') ?>
+ <div class="footer site-accent-bg-dark" style="padding-top:5px;">
+                <div class="content center-align-bl" style="min-height:20px;" > 
+                    <ul class="menu" style="position:absolute;top:5px;"> 
+                        <li><a class="link-button" href="#">Contact us</a></li>
+                        <li><a class="link-button" href="#">Help</a></li>                        
+                    </ul>
+                    <span class="site-accent-fg" style="position:absolute;top:5px;right:10px;" >&copy dcLibrary 2016</span>     
+                </div>
+            </div> <!-- end of footer-->
+        </div> <!-- end of root container-->
+    </body>
+</html>
