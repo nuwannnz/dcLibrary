@@ -98,7 +98,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
             if(mysqli_affected_rows($conn) == 1){
                 goToSignInPage("Online account created successfully. Please sign in.");
             }else if(mysqli_affected_rows($conn) == -1){
-                goToRegisterPage("Failed");
+                goToRegisterPage("Failed to create an account. Please try again.");
             }
         }
 

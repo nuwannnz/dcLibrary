@@ -1,10 +1,12 @@
+<?php include_once('../config.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="../css/main-styles.css" rel="stylesheet">
+        <link href="<?php echo $header_paths['css'] . '/main-styles.css'; ?>" rel="stylesheet">        
         <style>
             body{
                 background-color:#e44646;
@@ -36,7 +38,7 @@
     </head>
     <body>
 
-        <img class="center-align-bl" src="../resources/images/stop.png" alt="error image">
+        <img class="center-align-bl" src="<?php echo $header_paths['resources'] . '/images/stop.png'; ?>" alt="error image">
         <?php 
             echo "<p >";
             if(isset($_GET['message'])){

@@ -37,3 +37,40 @@ function validateRegisterForm(){
     return true;
     
 }
+
+function validateLoginForm(){
+    //get references to inputs    
+    var uname = document.getElementById('uname');
+    var pword = document.getElementById('pword');
+
+    //get references to error texts    
+    var uname_error = document.getElementById('uname_error');
+    var pword_error = document.getElementById('pword_error');
+
+    //hide all the error messages   
+    uname_error.style.display = "none";
+    pword_error.style.display = "none";
+
+    
+
+    switch ('') {       
+        case uname.value:
+            uname_error.style.display = "inline-block";
+            return false;
+        case pword.value:
+            pword_error.style.display = "inline-block";
+            return false;            
+    }
+
+    return true;
+    
+}
+
+function submitSearch(){
+    var searchText = document.getElementById('searchText');
+    if(searchText.value == ''){
+        return false;
+    }else{
+        return true;
+    }
+}

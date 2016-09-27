@@ -9,8 +9,8 @@ $project_root = "/dashboard/diwe_final/site";
 
 $paths = array(
     "images" =>  $root . "/images",
-    "scripts" =>  $root . "/js",
-    "styles" =>  $root . "/css",
+    "js" =>  $root . "/js",
+    "css" =>  $root . "/css",
     "models" => $root . "/models",
     "include" =>  $root . "/include",
     "functions" => $root . "/functions",
@@ -25,6 +25,10 @@ $paths = array(
 $header_paths = array(
     "templates" => $project_root . "/templates",
     "public" => $project_root . "/public",
+    "css" =>  $project_root . "/css",
+    "submit_forms" => $project_root . "/submit_forms",
+    "js" =>  $project_root . "/js",
+    "resources" => $project_root . "/resources",
 );
 
 //details about the database connection
