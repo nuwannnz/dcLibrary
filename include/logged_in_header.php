@@ -33,7 +33,11 @@
                         <div class="profile-icon-div">
                             <span class="site-accent-fg site-font-m"><?php echo $CurrentUser->getFName(); ?></span>
                         </div>
-                        <img class="profile-icon-img" src="<?php echo $header_paths['images'] . '/users/' . $CurrentUser->image;  ?>" alt="">
+                        <?php 
+                        $imagePath = $header_paths['images'] . '/users/';
+                        $image = $CurrentUser->image != null ? $CurrentUser->image : 'default.png';
+                        ?>
+                        <img class="profile-icon-img" src="<?php echo $imagePath . $image; ?>" alt="">
                         <div class="clickable" onclick="toggleDropdown();"></div>
                     </div>
 

@@ -34,5 +34,10 @@ function goToRegisterPage($message){
     }
 }
 
+function goToProfilePicPage(){            
+    global $header_paths;    
+    header("Location: ". $header_paths['public'] ."/user/profile_pic_upload.php");
+}
+
 
 ?>

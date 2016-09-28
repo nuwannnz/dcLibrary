@@ -202,3 +202,25 @@ ul.menu li{
 .borderless-button:hover{
     background-color: #3a3a56;
 }
+
+
+ .progress{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:15px solid transparent;
+    border-top:15px solid #222233;
+    border-bottom:15px solid #222233;
+    display:inline-block;
+   
+    animation:spin 1s linear infinite;            
+}
+
+@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+@-webkit-keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }

@@ -34,5 +34,19 @@ function getUser($conn,$userId){
     
 }
 
+//this will update the user image of the given id 
+// with the given image 
+function updateUserImage($conn,$userId,$image){
+
+    $query_update_user = "UPDATE `user` SET `user_image`='$image' WHERE `user_reg_id`='$userId'";
+    $result_update_user = mysqli_query($conn,$query_update_user);
+
+    if(mysqli_affected_rows($conn) == 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 
 ?>

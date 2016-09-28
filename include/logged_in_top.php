@@ -13,4 +13,5 @@ include_once($paths['functions'] . '/db_helper.php');
 
 $CurrentUser = getUser($conn,$_SESSION['user_detail']);
 
+
 ?>
