@@ -17,6 +17,7 @@ if(isset($_POST['login']) && $_POST['login'] == 'Log in'){
 
     if(empty($username) || empty($password)){
         goToSignInPage("Mandatory fields are missing.");
+        exit();
     }else{
         //we can now check whether the username and the password matches.
 
@@ -26,6 +27,7 @@ if(isset($_POST['login']) && $_POST['login'] == 'Log in'){
         //check whether we have a matching username
         if(mysqli_num_rows($result_select_user_tblUser) != 1){
             goToSignInPage("Wrong username and password combination.");
+            exit();
         }
 
         //fetch data
@@ -34,19 +36,21 @@ if(isset($_POST['login']) && $_POST['login'] == 'Log in'){
         //check the password
         if(sha1($password) != $row_select_user_tblUser['password']){
             goToSignInPage("Wrong username and password combination.");
+            exit();
         }
 
 
         // username and password matches. So create a session.
         
-        //session_start();
-        //$_SESSION['user_id'] = $row_select_user_tblUser['user_reg_id'];
-        //header("Location: ../user/logged_in_home.php");
+        session_start();
+        $_SESSION['user_detail'] = $row_select_user_tblUser['user_reg_id'];
+        header("Location: ".$header_paths['public'] ."/user/logged_in_home.php");
         echo "logged in";
     }
 
 }else{
     goToErrorPage("Unauthorized Access!");
+    exit();
 }
 
 ?>

@@ -29,6 +29,7 @@ $header_paths = array(
     "submit_forms" => $project_root . "/submit_forms",
     "js" =>  $project_root . "/js",
     "resources" => $project_root . "/resources",
+    "images" =>  $project_root . "/images",
 );
 
 //details about the database connection

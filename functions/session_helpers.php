@@ -3,7 +3,7 @@
 //this function will check whether a session exsits, 
 //if not it will start a session.
 function checkSession(){
-    if(session_id == ''){
+    if(session_id() == ''){
         session_start();
     }
     return true;
@@ -16,6 +16,10 @@ function getSessionDetail(){
     return $_SESSION['user_detail'];
 }
 
+function endSession(){
+    checkSession();
+    session_unset($_SESSION['user_detail']);
+}
 
 
 

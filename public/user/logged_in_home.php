@@ -1,5 +1,16 @@
-<?php require_once('../config.php') ?>
+<?php require_once('../../config.php') ?>
+
 <?php include_once($paths['include'] . '/logged_in_top.php') ?>
+
+<?php
+
+//if this is the first time user logged in 
+// redirect to the profile pic upload page 
+if($CurrentUser->image == null){
+    goToProfilePicPage();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
