@@ -1,5 +1,5 @@
 <?php require_once('../config.php'); ?>
-
+<?php include_once($paths['include'] . '/home_top.php') ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
