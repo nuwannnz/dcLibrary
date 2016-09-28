@@ -22,7 +22,7 @@
             background-color:#48486b
         }
                
-        label,input[type=submit]{
+        label,#confirm-button{
             display:block;
             margin-top:30px;
             min-width:150px;
@@ -36,7 +36,7 @@
             cursor:pointer;
         }
 
-        label:hover ,input[type=submit]:hover{
+        label:hover ,#confirm-button:hover{
             background-color:#222233;;
             color:#fff;                        
         }
@@ -66,7 +66,11 @@
 
 
     <div  style="position:relative;">
-        <img class="center-align-bl " id="preview-image" src="../../images/users/user(11).png" alt="">
+        <?php 
+            $imagePath = $header_paths['images'] . '/users/';
+            $image = $CurrentUser->image != null ? $CurrentUser->image : 'default.png';
+        ?>
+        <img class="center-align-bl " id="preview-image" src="<?php echo $imagePath . $image; ?>" alt="">
         <div class="progress" id="progressbar" style="position:absolute;top:50%;left:50%;margin-top:-45px;margin-left:-45px;display:none;"></div>        
     </div>
     <script src="<?php echo $header_paths['js'] . '/photoUpload.js'; ?>"></script>
