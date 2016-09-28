@@ -1,3 +1,4 @@
+
 <div class="root-container">
 
             <div class="top-header site-accent-bg-dark" style="min-height:50px;">
@@ -30,9 +31,9 @@
                     <!-- profile icon -->
                     <div class="profile-icon" id="profile-icon" >
                         <div class="profile-icon-div">
-                            <span class="site-accent-fg site-font-m">Nuwan</span>
+                            <span class="site-accent-fg site-font-m"><?php echo $CurrentUser->getFName(); ?></span>
                         </div>
-                        <img class="profile-icon-img" src="../images/users/user(10).png" alt="">
+                        <img class="profile-icon-img" src="<?php echo $header_paths['images'] . '/users/' . $CurrentUser->image;  ?>" alt="">
                         <div class="clickable" onclick="toggleDropdown();"></div>
                     </div>
 
@@ -42,7 +43,7 @@
                         <ul >
                             <li> <a href="#">My profile</a>   </li>
                             <li> <a href="#">Settings</a>   </li>
-                            <li> <a href="#">Log out</a>   </li>
+                            <li> <a href="<?php echo $header_paths['submit_forms'] . '/logout_submit.php'; ?>">Log out</a>   </li>
                             
                         </ul>
                     </div>

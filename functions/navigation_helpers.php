@@ -1,6 +1,6 @@
 <?php 
 //this script contains functions to navigate to various common pages 
-include_once('../config.php');
+//include_once('../config.php');
 
 
 //navigate to the error page

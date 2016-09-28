@@ -1,5 +1,7 @@
-<?php require_once('../config.php') ?>
+<?php require_once('../../config.php') ?>
+
 <?php include_once($paths['include'] . '/logged_in_top.php') ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
