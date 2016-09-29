@@ -38,6 +38,16 @@ class Book{
         $this->page_count = $_page_count;
         $this->added_on = $_added_on;
     } 
+
+    public function getNumOfReadsFormatted(){
+        if($this->num_of_reads < 10000){
+        return $this->num_of_reads;
+    }else if( $this->num_of_reads > 10000 && $this->num_of_reads <1000000){
+        return round($this->num_of_reads/1000,1) . "k";
+    }else if( $this->num_of_reads >1000000 && $this->num_of_reads < 1000000000){
+        return $this->num_of_reads/1000000 ."m";
+    }
+    }
 } 
 
 ?>

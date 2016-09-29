@@ -14,6 +14,8 @@ if(isset($_SESSION['user_detail'])){
  include_once($paths['include'] . '/logged_in_top.php'); 
 }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +34,7 @@ if(isset($_SESSION['user_detail'])){
         }
         
         ?>      
+        <link rel="stylesheet" href="<?php echo $header_paths['css'] .'/book-detail-styles.css' ?>">
     </head>
 
     
@@ -46,13 +49,145 @@ if(isset($_SESSION['user_detail'])){
     }
 ?>
 
-        
+ <?php 
+ 
+ if(isset($_GET['isbn'])){
+
+    $CurrentBook = getBook($conn,$_GET['isbn']);
+    
+ }
+ 
+ ?>       
             
 <!-- content -->
-<div class="content center-align-bl" style="min-height:770px;background-color:#fff;" >
+<div class="content center-align-bl" style="min-height:770px;background-color:#fff;padding:0px;margin-top:30px;position:relative;" >
 
+        <?php $coverImagePath =  $header_paths['images'] .'/books/'. $CurrentBook->cover_image; ?>
+                   
+    <div class="blur-background">
+        <div class="blur-image"  style="background-image:url('<?php echo $coverImagePath; ?>');" >
+        <div class="overlay-gray"></div>
+
+        </div> 
+    </div>    
+
+    <div class="inner-container">
+        <div class="book-container">
+            <img class="book-cover float-left" src="<?php echo $coverImagePath; ?>" alt="Cover image of the book.">
+            <div class="book-text-container float-left" style="position:relative;" >
+                <span class="title text-wrap"><?php echo $CurrentBook->title ?></span>
+                <span class="author text-wrap">by
+                    <?php 
+                    
+                    foreach($CurrentBook->author_ids as $author_id){
+                        $author = getAuthor($conn,$author_id);
+                        echo "<a href=\"#\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
+                        if(count($CurrentBook->author_ids)>0 ){
+                            echo "&nbsp&nbsp"; 
+                        }
+                    }
+                    
+                     ?>
+                </span>
+
+                <span class="description text-wrap"> <?php echo $CurrentBook->description; ?></span>
+
+                <span class="genre text-wrap"> 
+                    <?php 
+                        $genre = getGenre($conn,$CurrentBook->genre_id);
+                        echo "<a href=\"#\">" . $genre->name . "</a>"
+                    ?>
+                </span>
+
+                <div class="rating-container" >
+                    <span id="star1" class="rating-star-selected" style="display:inline-block;"></span>
+                    <span id="star2" class="rating-star-selected" style="display:inline-block;"></span>
+                    <span id="star3" class="rating-star" style="display:inline-block;"></span>
+                    <span id="star4" class="rating-star" style="display:inline-block;"></span>
+                    <span id="star5" class="rating-star" style="display:inline-block;"></span> 
+                    <span style="display:inline-block;"> </span>
+                    <span id="starValue" style="display:inline-block;vertical-align:top;margin-top:1px;" ><?php echo getRatingForBook($conn,$CurrentBook->isbn); ?></span>                   
+                </div>
+            </div>
+            <div class="clear-fix"></div>
+
+            <a class="border-button" style="padding:4px 10px;width:188px;margin:10px 0px 0px 0px;border-color:rgba(255,255,255,0.7)" href="#">Add to my list</a>
+
+            
+        </div>
+
+        <table class="circle-detail-table">
+            <tr>
+                <td>
+                    <div class="circle-detail center-align-bl">
+                        <div class="circle">
+                            <img src="../resources/images/pages.png" style="opacity:0.7;" alt="Number of pages.">
+                        </div>
+                        <div class="circle-text">
+                            <span class="site-font-m">Pages</span>
+                            <span style="opacity:0.7;margin-top:5px;"><?php echo $CurrentBook->page_count; ?></span>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="circle-detail center-align-bl">
+                        <div class="circle">
+                            <img src="../resources/images/reads.png" style="opacity:0.7;" alt="Number of pages.">
+                        </div>
+                        <div class="circle-text">
+                            <span class="site-font-m">Reads</span>
+                            <span style="opacity:0.7;margin-top:5px;"><?php echo $CurrentBook->getNumOfReadsFormatted(); ?></span>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="circle-detail center-align-bl">
+                        <div class="circle">
+                            <img src="../resources/images/copies1.png" style="opacity:0.7;" alt="Number of pages.">
+                        </div>
+                        <div class="circle-text">
+                            <span class="site-font-m">Copies</span>
+                            <span style="opacity:0.7;margin-top:5px;"><?php echo $CurrentBook->num_of_copies; ?></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="reviews-container">
+            
+            <?php 
+                $reviews = getReviewsForBook($conn,$CurrentBook->isbn);
+                if(count($reviews) >0 ){
+                    echo "<table>";
+                        echo "<tr>";
+                        foreach ($reviews as $review ) {
+$t= <<<REVIEW
+<td>
+<div class="review-container" >
+    <div>
+    </div>
+    <div>
+    </div>
+</div>
+</td>
+REVIEW;
+                        echo $t;
+                        }    
+                        echo "</tr>";
+                    echo "</table>";
+
+                }
+            ?>
+                                
+
+        </div>
+    </div><!-- end of inner container-->
+
+    <hr style="position:absolute;top:430px;left:0px;right:0px;border:0px;border-top: 0.01px solid rgba(255,255,255,0.4);" />
     
-
 </div><!-- end of content container-->
 
         <!-- footer -->

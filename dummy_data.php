@@ -14,6 +14,7 @@ require_once($paths['include'] . '/connection.php');
 //createBookAuthors();
 //createBookCheckouts();
 //createBookCheckins();
+//createReviews();
 
 $description_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porta ipsum at elit porta, at tempor nulla consectetur. Quisque eget libero ac mauris posuere aliquam nec non eros. Quisque turpis lorem";
 
@@ -306,6 +307,35 @@ function createBookCheckins(){
 
 }
 
+//this function will create reviews for books
+function createReviews(){
+    global $conn;
+    global $description_text;
+
+    //get isbns
+    $isbns = getIsbns();
+    //get user ids
+    $userIds = getUserIds();
+
+    foreach ($isbns as $isbn ) {
+        $i = mt_rand(1,5);
+        for ($i=1; $i <=5; $i++) { 
+            $userid = $userIds[array_rand($userIds)];
+            if($userid == $last_userid) { $userid = $userIds[array_rand($userIds)];}
+            $rating = mt_rand(1,5);
+            $date = date("Y-m-d", time() - mt_rand(900000,9000000));
+
+            $query_insert_review = "INSERT INTO `review` (`isbn`,`user_reg_id`,`content`,`rating`,`date`) VALUES ('$isbn','$userid','$description_text', '$rating','$date')"; 
+            $result_insert_review = mysqli_query($conn,$query_insert_review);
+            if(mysqli_affected_rows($conn) != 1){
+                echo "failed to add review";
+            }
+            $last_userid = $userid;
+        }
+    }
+
+}
+
 
 //helper functions 
 
@@ -320,6 +350,18 @@ function getRegisteredUsersId(){
         array_push($reg_users,$row_select_regusers['user_reg_id']);
     }
     return $reg_users;
+}
+
+
+function getUserIds(){
+    global $conn;
+
+    $query_select_user = "SELECT `user_reg_id` FROM `user`"; 
+    $result_select_user = mysqli_query($conn,$query_select_user);
+    while($row_select_user = mysqli_fetch_assoc($result_select_user)){ 
+         $user_ids[] = $row_select_user['user_reg_id'];
+    };
+    return $user_ids;
 }
 
 function getIsbns(){

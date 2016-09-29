@@ -1,0 +1,160 @@
+.blur-background{
+    width:100%;
+    height: 520px;
+    background-color: #999;
+    overflow: hidden;
+    animation: 0.8s fadeIn;
+}
+
+.overlay-gray{
+    background-color:#333;
+    opacity: 0.4;
+    height: 520px;
+}
+
+.blur-image{    
+    background-repeat: no-repeat;
+    background-size: cover;    
+    height: 520px;
+    width:100%;
+    filter: blur(40px);
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn{
+    from{opacity: 0.4}
+    to{opacity: 1}
+}
+
+.inner-container{
+    width: calc( 100% - 50px);
+    
+    min-height: 650px;
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    padding: 5px;
+}
+
+.book-cover{
+    width:210px;
+    height:330px;
+}
+
+
+
+.book-text-container{
+    min-height: 330px;
+    
+    padding-left: 10px;    
+    width: calc( 100% - 230px);
+}
+
+.book-text-container span , .book-text-container a{
+    display: block;
+    max-width: 650px;
+    color: #fff;
+    opacity: 0.8;
+    
+}
+.book-text-container .title{
+    font-size: 46px;    
+    margin-top: -13px;
+    white-space: pre-line;
+    color:#fff;
+    opacity: 1;
+}
+
+.book-text-container a{    
+    display: inline;
+}
+
+.book-text-container .description{
+    white-space: pre-line;
+    margin-top: 30px;
+    max-width: 700px;
+}
+
+.book-text-container .genre{
+    position: absolute;
+    bottom: 20px; 
+    display: inline-block;
+}
+
+
+.rating-star,.rating-star-selected{        
+    width:20px;
+    height:20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.rating-star{
+    background-image: url('../resources/images/nstar-not.png');
+}
+
+.rating-star-selected{
+    background-image: url('../resources/images/nstar.png');
+}
+
+.rating-container{
+    display:inline-block;
+    position:absolute;
+    bottom :20px;
+    right:10px;
+    height: 30px;
+}
+
+.circle-detail-table{
+    width: 100%;    
+    margin-top: 25px;
+}
+
+.circle-detail{
+    width: 120px;
+}
+
+
+.circle-detail .circle{
+    width: 55px;
+    height: 55px;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+}
+
+.circle-detail img{
+    width:34px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -17px;
+    margin-left: -17px;
+}
+
+.circle-text{
+    display: inline-block;
+    height: 55px;
+    vertical-align: top;
+    padding-left: 5px;
+}
+.circle-detail div span{
+    color: #fff;    
+    display: block;    
+    left: 65px;
+
+}
+
+
+/*style for review*/
+.reviews-container{
+    width:100%;
+    overflow-x: scroll;
+}
+.review-container{
+    width:280px;
+    height:150px;
+    background-color: #333;
+    margin: 10px;
+}
