@@ -1,6 +1,6 @@
 function toggleDropdown(){
     var dropdown = document.getElementsByClassName('dropdown-menu-container');
-
+    
     dropdown[0].classList.toggle('show');
     if(dropdown[0].classList.contains('show')){
         document.getElementById('profile-icon').classList.add('profile-icon-selected');
@@ -20,3 +20,5 @@ window.onclick = function(event){
     
     
 }
+
+

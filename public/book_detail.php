@@ -36,6 +36,7 @@ if(isset($_SESSION['user_detail'])){
         
         ?>      
         <link rel="stylesheet" href="<?php echo $header_paths['css'] .'/book-detail-styles.css' ?>">
+        
     </head>
 
     
@@ -113,10 +114,11 @@ if(isset($_SESSION['user_detail'])){
                 </div>
             </div>
             <div class="clear-fix"></div>
-
-            <a class="border-button" style="padding:4px 10px;width:188px;margin:10px 0px 0px 0px;border-color:rgba(255,255,255,0.7)" href="#">Add to my list</a>
-
-            
+            <form  action="<?php echo $header_paths['submit_forms'] .'/book_list_submit.php'; ?>" method="POST">
+            <input type="hidden" name="add" value="<?php echo isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? 0 : 1 ?> "/>
+            <input type="hidden" name="isbn" value="<?php echo $CurrentBook->isbn ?>" />            
+            <input class="border-button book-list-button" type="submit" name="addToList" style="" href="#" value="<?php echo isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? "Remove from my list ":"Add to my list" ?>" />
+            </form>    
         </div>
 
         <table class="circle-detail-table">
@@ -163,7 +165,17 @@ if(isset($_SESSION['user_detail'])){
         
     </div><!-- end of inner container-->
 
-            <p class="font-large" style="margin-left:10px;">Reviews</p>
+    <p class="font-large" style="margin-left:10px;">Reviews</p>
+    <?php 
+    if(isset($_SESSION['user_detail'])) {
+         echo "<a class=\"border-button\" onclick=\"showReviewBox();\" style=\"padding:4px 10px;margin:10px 0px 0px 0px;border-color:#222233;color:#222233;position:absolute;right: 20px;top: 542px;\" href=\"javascript: void(0);\">Write a review</a>"; 
+    }else{
+            $message = base64_encode(urlencode("Please sign in to write a review"));
+         echo "<a class=\"border-button\" href=\"". $header_paths['public'] . "/login.php?message=$message"."\" style=\"padding:4px 10px;margin:10px 0px 0px 0px;border-color:#222233;color:#222233;position:absolute;right: 20px;top: 542px;\" >Write a review</a>";
+    }
+    
+    ?>
+    
     <div class="reviews-container">
             <?php 
                 $reviews = getReviewsForBook($conn,$CurrentBook->isbn);
@@ -177,7 +189,7 @@ if(isset($_SESSION['user_detail'])){
 
                                 echo "<tr>";
                                     //image
-                                    echo "<td>";
+                                    echo "<td style=\"width:48px;\">";
                                         echo "<img src=\"".$header_paths['images'] . '/users/' .$user->image."\" />";
                                     echo "</td>";
 
@@ -237,14 +249,124 @@ if(isset($_SESSION['user_detail'])){
     
     <?php 
         if(count($reviews)){
-            echo "<a href=\"javascript: void();\" id=\"viewMore\" onclick=\"viewMore();\" style=\"display:block;text-align:center;text-decoration:none;margin:10px;\" >View More</a>";
+            echo "<a href=\"javascript: void(0);\" id=\"viewMore\" onclick=\"viewMore();\" style=\"display:block;text-align:center;text-decoration:none;margin:10px;\" >View More</a>";
         }
     ?>
 
     <hr style="position:absolute;top:430px;left:0px;right:0px;border:0px;border-top: 0.01px solid rgba(255,255,255,0.4);" />
     
+
+    
+
+<div id="add-review-container" class="popup-container" style="display:none;">
+    <div class="popup"  >
+        <form action="<?php echo $header_paths['submit_forms'] . '/review_submit.php'; ?>" method="POST" onsubmit="return validateReview();">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:48px;">
+                    <!-- image--> 
+                    <img class="profile-image-circle" src="<?php echo $header_paths['images'] . '/users/' . $CurrentUser->image; ?>" >
+                </td>
+                <td>
+                    <!-- name-->
+                    <span><?php echo $CurrentUser->getFName(); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span id="rstar1" class="rating-star-selected" style="display:inline-block;"></span>
+                    <span id="rstar2" class="rating-star" style="display:inline-block;"></span>
+                    <span id="rstar3" class="rating-star" style="display:inline-block;"></span>
+                    <span id="rstar4" class="rating-star" style="display:inline-block;"></span>
+                    <span id="rstar5" class="rating-star" style="display:inline-block;"></span> 
+                    
+                    <select name="rating" id="rating" style="margin-left:10px;" onchange="onRateChange(this.value);">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <script>
+
+                        function validateReview(){
+                            var content = document.getElementById('rcontent');
+                            if(content.value == "" ){
+                                return false;
+                            }
+                            return true;
+                        } 
+
+                       function onRateChange(rate){
+                            var stars = [];
+                            stars.push(document.getElementById('rstar1'));
+                            stars.push(document.getElementById('rstar2'));
+                            stars.push(document.getElementById('rstar3'));
+                            stars.push(document.getElementById('rstar4'));
+                            stars.push(document.getElementById('rstar5'));
+
+                            for(var i in stars){
+                                stars[i].className ='';
+                            }
+
+                            var s = "rating-star-selected";
+                            var n = "rating-star";
+
+                            var c1 = rate >= 1 ? s : n;
+                            var c2 = rate >= 2 ? s : n;
+                            var c3 = rate >= 3 ? s : n;
+                            var c4 = rate >= 4 ? s : n;
+                            var c5 = rate == 5 ? s : n;
+
+                            stars[0].className += c1;
+                            stars[1].className += c2;
+                            stars[2].className += c3;
+                            stars[3].className += c4;
+                            stars[4].className += c5;
+
+                        }
+                    </script>            
+                </td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <textarea name="rcontent" id="rcontent" cols="94" style="max-width:480px;max-height:200px;font-size:16px;" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:right;padding-right:6px;">
+                    <input type="submit" name="reviewSubmit" class="input-button" style="width:100px;height:27px;font-size:16px;padding-top:3px;display:inline-block;border-radius:5px;" value="Add review">
+                    <a class="input-button"  onclick="closeReview();" style="display:inline-block;width:100px;height:22px;font-size:16px;border-radius:5px;text-align:center;padding-top:3px;" >Cancel</a>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="isbn" value="<?php echo $CurrentBook->isbn; ?>">
+        <input type="hidden" name="userId" value="<?php echo $CurrentUser->id; ?>">
+        </form>
+    </div>
+</div>
+
+<script>
+    function showReviewBox(){
+        var reviewBox = document.getElementById("add-review-container");
+        reviewBox.style.display ="block";
+    } 
+    
+    function closeReview(){
+        var reviewBox = document.getElementById("add-review-container");
+        reviewBox.style.display ="none";
+    }
+    
+    
+    
+
+</script>
+
 </div><!-- end of content container-->
 
+</div>
         <!-- footer -->
         <?php 
          if(isset($_SESSION['user_detail'])){

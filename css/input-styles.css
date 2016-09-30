@@ -22,7 +22,7 @@ input[type=text],input[type=email],input[type=password]{
     outline: 0px;
 }
 
-input[type=submit]{
+input[type=submit],.input-button{
     width: 314px;
     height: 44px;
     border: 1px solid #222233;  
@@ -31,7 +31,7 @@ input[type=submit]{
     cursor: pointer; 
 }
 
-input[type=submit]:hover{
+input[type=submit]:hover,.input-button:hover{
     background-color: #222233;
     color:#fff;
 }

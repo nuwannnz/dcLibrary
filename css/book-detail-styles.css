@@ -15,6 +15,7 @@
 .blur-image{    
     background-repeat: no-repeat;
     background-size: cover;    
+    background-position-y: -200px;
     height: 520px;
     width:100%;
     filter: blur(40px);
@@ -182,5 +183,28 @@
     margin: 0px;
     max-height: 160px;
     white-space: pre-wrap;
+}
+
+.input-button{
+    width: 314px;
+    height: 44px;
+    border: 1px solid #222233;  
+    background-color: #fff;  
+    margin-bottom: 10px;       
+    cursor: pointer; 
+}
+
+.input-button:hover{
+    background-color: #222233;
+    color:#fff;
+}
+
+.book-list-button{
+    padding:7px 10px;
+    width:210px;
+     margin:10px 0px 0px 0px;
+     border-color:rgba(255,255,255,0.7);
+     font-size:17px;
+    cursor:pointer;
 }
 

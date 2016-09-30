@@ -149,7 +149,45 @@ function getReviewsForBook($conn,$isbn){
     return $reviews;
 }
 
+function addReview($conn,$review){
+    $query_insert_review = "INSERT INTO `review` (`isbn`,`user_reg_id`,`content`,`rating`,`date`) VALUES('".$review->isbn."','".$review->user_id."' ,'".$review->content."','".$review->rating."', '". $review->date."' )"; 
+    $result_insert_review = mysqli_query($conn,$query_insert_review);
+    $m = mysqli_affected_rows($conn);
+    if(mysqli_affected_rows($conn) != 1){
+         return false;
+    }
+    return true;
+}
 
 
+function isBookListContainsBook($conn,$isbn,$userId){
+    $query_select_bookList = "SELECT `isbn` FROM `user_book_list` WHERE `isbn`='$isbn' AND `user_reg_id`='$userId'"; 
+    $result_select_bookList = mysqli_query($conn,$query_select_bookList);
+    
+    if(mysqli_num_rows($result_select_bookList) == 1){
+        return true;
+    }else{
+        return false;
+    }
+
+}
+
+function addBookToList($conn,$isbn,$userId){
+    $query_insert_bookList = "INSERT INTO `user_book_list` (`isbn`,`user_reg_id`) VALUES('$isbn','$userId')"; 
+    $result_insert_bookList = mysqli_query($conn,$query_insert_bookList);
+    if(mysqli_affected_rows($conn) != 1){
+         return false;
+    }
+    return true;    
+}
+
+function removeFromBookList($conn,$isbn,$userId){
+    $query_delete_bookList = "DELETE FROM `user_book_list` WHERE `isbn`='$isbn' AND `user_reg_id`='$userId'"; 
+    $result_delete_bookList = mysqli_query($conn,$query_delete_bookList);
+    if(mysqli_affected_rows($conn) != 1){
+        return false;
+    }
+    return true; 
+}
 
 ?>
