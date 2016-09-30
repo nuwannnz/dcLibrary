@@ -6,6 +6,7 @@ include_once($paths['functions'] . '/session_helpers.php');
 include_once($paths['models'] . '/User.php');
 include_once($paths['include'] . '/connection.php');
 include_once($paths['functions'] . '/db_helper.php');
+include_once($paths['functions'] . '/html_helper.php');
 
 checkSession();
 
@@ -60,7 +61,7 @@ if(isset($_SESSION['user_detail'])){
  ?>       
             
 <!-- content -->
-<div class="content center-align-bl" style="min-height:770px;background-color:#fff;padding:0px;margin-top:30px;position:relative;" >
+<div id="content" class="content center-align-bl" style="min-height:770px;background-color:#fff;padding:0px;margin-top:30px;position:relative;" >
 
         <?php $coverImagePath =  $header_paths['images'] .'/books/'. $CurrentBook->cover_image; ?>
                    
@@ -100,13 +101,15 @@ if(isset($_SESSION['user_detail'])){
                 </span>
 
                 <div class="rating-container" >
-                    <span id="star1" class="rating-star-selected" style="display:inline-block;"></span>
+                   <!-- <span id="star1" class="rating-star-selected" style="display:inline-block;"></span>
                     <span id="star2" class="rating-star-selected" style="display:inline-block;"></span>
                     <span id="star3" class="rating-star" style="display:inline-block;"></span>
                     <span id="star4" class="rating-star" style="display:inline-block;"></span>
                     <span id="star5" class="rating-star" style="display:inline-block;"></span> 
                     <span style="display:inline-block;"> </span>
-                    <span id="starValue" style="display:inline-block;vertical-align:top;margin-top:1px;" ><?php echo getRatingForBook($conn,$CurrentBook->isbn); ?></span>                   
+                    <span id="starValue" style="display:inline-block;vertical-align:top;margin-top:1px;" ><?php echo getRatingForBook($conn,$CurrentBook->isbn); ?></span>
+                    -->
+                    <?php echo  getRatingStars(getRatingForBook($conn,$CurrentBook->isbn)); ?>                   
                 </div>
             </div>
             <div class="clear-fix"></div>
@@ -156,35 +159,87 @@ if(isset($_SESSION['user_detail'])){
             </tr>
         </table>
 
-        <div class="reviews-container">
-            
+
+        
+    </div><!-- end of inner container-->
+
+            <p class="font-large" style="margin-left:10px;">Reviews</p>
+    <div class="reviews-container">
             <?php 
                 $reviews = getReviewsForBook($conn,$CurrentBook->isbn);
                 if(count($reviews) >0 ){
-                    echo "<table>";
-                        echo "<tr>";
-                        foreach ($reviews as $review ) {
-$t= <<<REVIEW
-<td>
-<div class="review-container" >
-    <div>
-    </div>
-    <div>
-    </div>
-</div>
-</td>
-REVIEW;
-                        echo $t;
-                        }    
-                        echo "</tr>";
-                    echo "</table>";
+                   
+                    foreach ($reviews as $review ) {
+                        $user = getUser($conn,$review->user_id);
+                        echo "<div class=\"review-container float-left\">";
 
+                            echo "<table>";
+
+                                echo "<tr>";
+                                    //image
+                                    echo "<td>";
+                                        echo "<img src=\"".$header_paths['images'] . '/users/' .$user->image."\" />";
+                                    echo "</td>";
+
+                                    //name
+                                    echo "<td>";
+                                        echo "<p>" . $user->getFName() . "</p>";
+                                        echo getRatingStars($review->rating);
+                                    echo "</td>";
+
+                                    //date
+                                    echo "<td style=\"padding-top:5px;vertical-align:text-top;\">";
+                                        echo "<span>" . $review->date . "</span>";
+                                    echo "</td>";
+                                echo "<tr>";
+
+                                echo "<tr>";
+                                    //content
+                                    echo "<td colspan=\"3\">";
+                                        echo "<p class=\"text-wrap\">" . $review->content . "</p>";
+                                    echo "</td>";
+                                echo "<tr>";
+
+                            echo "</table>";
+
+                        echo "</div>";
+
+                    }    
+                       
+                    echo "<div class=\"clear-fix\"></div>";
+                }else{
+                    echo "<p>There are no reviews for this book yet.</p>";
                 }
+                    
             ?>
                                 
+<script>
+    function viewMore(){
+        var container = document.getElementsByClassName('reviews-container')[0];
+        var button = document.getElementById('viewMore');
+        container.style.maxHeight="inherit";
+        
+        button.innerHTML = "Show less";
+        button.onclick = function(){viewLess()};
+    }
 
-        </div>
-    </div><!-- end of inner container-->
+    function viewLess(){
+        var container = document.getElementsByClassName('reviews-container')[0];
+        var button = document.getElementById('viewMore');
+        container.style.maxHeight="180px";
+        
+        button.innerHTML = "View more";
+        button.onclick = function(){viewMore()};
+    }
+    
+</script>
+    </div><!-- end of reviews container-->
+    
+    <?php 
+        if(count($reviews)){
+            echo "<a href=\"javascript: void();\" id=\"viewMore\" onclick=\"viewMore();\" style=\"display:block;text-align:center;text-decoration:none;margin:10px;\" >View More</a>";
+        }
+    ?>
 
     <hr style="position:absolute;top:430px;left:0px;right:0px;border:0px;border-top: 0.01px solid rgba(255,255,255,0.4);" />
     

@@ -31,7 +31,7 @@ function loadAjax(formDataObj){
     var confirmButton = document.getElementById('confirm-button');
     var progressBar = document.getElementById('progressbar');
     var imageName = document.getElementById('image-name');
-
+    
     var xmlHttp = new XMLHttpRequest();
     
     image.style.opacity = "0.4";

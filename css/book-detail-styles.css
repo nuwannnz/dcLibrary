@@ -27,9 +27,8 @@
 }
 
 .inner-container{
-    width: calc( 100% - 50px);
-    
-    min-height: 650px;
+    width: calc( 100% - 50px);    
+    min-height: 472px;
     position: absolute;
     top: 40px;
     left: 20px;
@@ -150,11 +149,38 @@
 /*style for review*/
 .reviews-container{
     width:100%;
-    overflow-x: scroll;
+    max-height: 180px;
+    overflow: hidden;
 }
 .review-container{
-    width:280px;
+    width:calc( (100% - 60px) / 3 );
     height:150px;
-    background-color: #333;
+    /*max-height: 160px;*/
     margin: 10px;
+    margin-bottom: 20px;
+    /*overflow: hidden;*/
 }
+
+.review-container table{
+    
+    width:100%;
+    /*max-height: 160px;*/
+}
+
+.review-container table td,tr{
+    
+}
+
+.review-container td img{
+    width:45px;
+    height:45px;
+    border-radius: 50%;
+    background-color: #333;;
+}
+
+.review-container td p{
+    margin: 0px;
+    max-height: 160px;
+    white-space: pre-wrap;
+}
+
