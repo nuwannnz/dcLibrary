@@ -12,6 +12,10 @@ class Author{
         $this->lname = $_lname;
         $this->image = $_image;
     }
+
+    function getFullName(){
+        return ucfirst($this->fname) . " " . ucfirst($this->lname);
+    }
 }
 
 

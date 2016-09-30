@@ -57,6 +57,9 @@ if(isset($_SESSION['user_detail'])){
 
     $CurrentBook = getBook($conn,$_GET['isbn']);
     
+ }else{
+     header("Location:" .$header_paths['public'] . '/explore_books.php');
+     exit();
  }
  
  ?>       
@@ -114,11 +117,18 @@ if(isset($_SESSION['user_detail'])){
                 </div>
             </div>
             <div class="clear-fix"></div>
-            <form  action="<?php echo $header_paths['submit_forms'] .'/book_list_submit.php'; ?>" method="POST">
-            <input type="hidden" name="add" value="<?php echo isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? 0 : 1 ?> "/>
-            <input type="hidden" name="isbn" value="<?php echo $CurrentBook->isbn ?>" />            
-            <input class="border-button book-list-button" type="submit" name="addToList" style="" href="#" value="<?php echo isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? "Remove from my list ":"Add to my list" ?>" />
-            </form>    
+            <?php
+            if(isset($_SESSION['user_detail'])) {                
+               echo  "<form  action=\"". $header_paths['submit_forms'] .'/book_list_submit.php' ."\" method=\"POST\">";
+               echo  "<input type=\"hidden\" name=\"add\" value=\"" . isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? 0 : 1 ."\"/>";
+               echo   "<input type=\"hidden\" name=\"isbn\" value=\"" . $CurrentBook->isbn . "\" /> ";           
+               echo   "<input class=\"border-button book-list-button\" type=\"submit\" name=\"addToList\" value=\"". isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? "Remove from my list ":"Add to my list" ."\" />";
+               echo  "</form>";
+            } else{
+                 $message = base64_encode(urlencode("Please sign in to add a book to your list."));
+                echo   "<a class=\"border-button book-list-button\" style=\"width:190px;\" type=\"submit\" name=\"addToList\" href=\"". $header_paths['public'].'/login.php?message='.$message."\" >Add to my list </a>";
+            }
+            ?>    
         </div>
 
         <table class="circle-detail-table">
@@ -248,7 +258,7 @@ if(isset($_SESSION['user_detail'])){
     </div><!-- end of reviews container-->
     
     <?php 
-        if(count($reviews)){
+        if(count($reviews) >0 ){
             echo "<a href=\"javascript: void(0);\" id=\"viewMore\" onclick=\"viewMore();\" style=\"display:block;text-align:center;text-decoration:none;margin:10px;\" >View More</a>";
         }
     ?>
