@@ -39,5 +39,13 @@ function goToProfilePicPage(){
     header("Location: ". $header_paths['public'] ."/user/profile_pic_upload.php");
 }
 
+function goToMyBooksPage($tab=0){
+    global $header_paths;    
+    if($tab > 0){
+        header("Location: ". $header_paths['public'] ."/user/my_books.php?tab=$tab");
+    }else{
+        header("Location: ". $header_paths['public'] ."/user/my_books.php");
+    }
+}
 
 ?>

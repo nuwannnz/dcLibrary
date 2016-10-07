@@ -16,6 +16,11 @@ if(isset($_POST['addToList'])) {
           }
 
           if($status){
+
+              if(isset($_POST['return_location'])){
+                header("Location: " . $_POST['return_location']);
+                exit();    
+              }
               header("Location: " . $header_paths['public'] . '/book_detail.php?isbn=' . $_POST['isbn']);
               exit();
           }else{

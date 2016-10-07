@@ -1,3 +1,4 @@
+
 <?php 
 
 function getRatingStars($rating){
@@ -26,5 +27,24 @@ R;
 return $m;
 }
 
+function printBook($book){
+    global $header_paths;
+    echo "<a style=\"float:left;text-decoration:none;\" href=\"". $header_paths['public']. '/book_detail.php?isbn='. $book->isbn ."\">";                                
+                                echo "<table class=\"book\">";
+                                    echo "<tr>";
+
+                                        echo "<td style=\"width:150px;\">";
+                                            echo "<img src=\"". $header_paths['images']. '/books/'.$book->cover_image ."\" />";
+                                            echo "</a>";
+                                        echo "</td>";
+
+                                        echo "<td style=\"vertical-align:top;\">";                                 
+                                            echo "<p class=\"title text-wrap\">". $book->title ."</p>";                    
+                                        echo "</td>";
+
+                                    echo "</tr>";
+                                echo "</table>";                    
+                            echo "</a>"; 
+}
 
 ?>

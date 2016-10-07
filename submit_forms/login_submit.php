@@ -44,7 +44,7 @@ if(isset($_POST['login']) && $_POST['login'] == 'Log in'){
         
         session_start();
         $_SESSION['user_detail'] = $row_select_user_tblUser['user_reg_id'];
-        header("Location: ".$header_paths['public'] ."/user/logged_in_home.php");
+        header("Location: ".$header_paths['public'] ."/user/my_books.php");
         echo "logged in";
     }
 

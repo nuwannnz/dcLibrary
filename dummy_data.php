@@ -337,6 +337,32 @@ function createReviews(){
 }
 
 
+function randomizeUserReads(){
+    global $conn;
+
+    $query_select_user_reads = "SELECT * FROM `user_read`"; 
+    $result_select_user_reads = mysqli_query($conn,$query_select_user_reads);
+
+    $user_reads = array();
+    while($row_select_user_reads = mysqli_fetch_assoc($result_select_user_reads)){ 
+         $user_reads[] = array(
+             "userId" => $row_select_user_reads['user_reg_id'],
+             "isbn" => $row_select_user_reads['isbn'],
+         );
+    };
+    $completed_values = ["'1'","'0'",'NULL'];
+    foreach ($user_reads as $user_read) {
+        $isCompleted = $completed_values[array_rand($completed_values)];
+
+        $query_update_user_reads = "UPDATE `user_read` SET `is_completed`=$isCompleted WHERE `user_reg_id`='". $user_read['userId'] ."' AND `isbn`='". $user_read['isbn']."'"; 
+        $query_update_user_reads = mysqli_query($conn,$query_update_user_reads);
+        if(mysqli_affected_rows($conn) == -1){
+             echo "Failed to update user read";
+        }
+    }
+
+}
+
 //helper functions 
 
 function getRegisteredUsersId(){

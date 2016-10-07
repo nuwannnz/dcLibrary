@@ -201,4 +201,53 @@ function getBooksOfAuthor($conn,$id){
     return $books;
 }
 
+
+function getBookShelfEntries($conn,$userId){
+    global $paths;
+    include_once($paths['models']. '/Book.php');
+
+    $query_select_user_read = "SELECT * FROM `user_read` WHERE `user_reg_id`='$userId'"; 
+    $result_select_user_read = mysqli_query($conn,$query_select_user_read);
+    $userReads = array();
+    while($row_select_user_read = mysqli_fetch_assoc($result_select_user_read)){ 
+         $userReads[] = new BookShelfEntry(
+             getBook($conn,$row_select_user_read['isbn']),
+             getCheckout($conn,$row_select_user_read['isbn'],$row_select_user_read['user_reg_id']),
+             $row_select_user_read['is_completed']
+         );
+    };
+
+    return $userReads;
+
+}
+
+function getCheckout($conn,$isbn,$userId){
+    global $paths;
+    include_once($paths['models']. '/Book.php');
+
+    $query_select_checkout = "SELECT * FROM `book_checkout` WHERE `isbn`='$isbn' AND `user_reg_id`='$userId'"; 
+    $result_select_checkout = mysqli_query($conn,$query_select_checkout);
+    $row_select_checkout = mysqli_fetch_assoc($result_select_checkout);
+
+    $checkout = new BookCheckout(
+        $row_select_checkout['checkout_id'],
+        $row_select_checkout['date'],
+        $row_select_checkout['return_date'],
+        $row_select_checkout['isbn'],
+        $row_select_checkout['user_reg_id'],
+        $row_select_checkout['admin_id'],
+        $row_select_checkout['is_returned']
+    );
+    return $checkout;
+}
+
+function getUserBookList($conn,$userId){
+    $query_select_booklist = "SELECT * FROM `user_book_list` WHERE `user_reg_id`='$userId'"; 
+    $result_select_booklist = mysqli_query($conn,$query_select_booklist);
+    $list = array();
+    while($row_select_booklist = mysqli_fetch_assoc($result_select_booklist)){ 
+         $list[] = getBook($conn,$row_select_booklist['isbn']);
+    };
+    return $list;
+}
 ?>

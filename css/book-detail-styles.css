@@ -131,7 +131,9 @@
     left: 50%;
     margin-top: -17px;
     margin-left: -17px;
+    opacity: 0.7;
 }
+
 
 .circle-text{
     display: inline-block;

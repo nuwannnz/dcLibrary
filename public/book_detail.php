@@ -119,10 +119,12 @@ if(isset($_SESSION['user_detail'])){
             <div class="clear-fix"></div>
             <?php
             if(isset($_SESSION['user_detail'])) {                
+                $addValue = isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? 0 : 1 ;
+                $submitValue  = isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? "Remove from my list " : "Add to my list" ;
                echo  "<form  action=\"". $header_paths['submit_forms'] .'/book_list_submit.php' ."\" method=\"POST\">";
-               echo  "<input type=\"hidden\" name=\"add\" value=\"" . isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? 0 : 1 ."\"/>";
+               echo  "<input type=\"hidden\" name=\"add\" value=\"" .$addValue ."\"/>";
                echo   "<input type=\"hidden\" name=\"isbn\" value=\"" . $CurrentBook->isbn . "\" /> ";           
-               echo   "<input class=\"border-button book-list-button\" type=\"submit\" name=\"addToList\" value=\"". isBookListContainsBook($conn,$CurrentBook->isbn,$CurrentUser->id) === true ? "Remove from my list ":"Add to my list" ."\" />";
+               echo   "<input class=\"border-button book-list-button\" type=\"submit\" name=\"addToList\" value=\"". $submitValue."\" />";
                echo  "</form>";
             } else{
                  $message = base64_encode(urlencode("Please sign in to add a book to your list."));
@@ -136,7 +138,7 @@ if(isset($_SESSION['user_detail'])){
                 <td>
                     <div class="circle-detail center-align-bl">
                         <div class="circle">
-                            <img src="../resources/images/pages.png" style="opacity:0.7;" alt="Number of pages.">
+                            <img class="icon" src="../resources/images/pages.png"  alt="Number of pages.">
                         </div>
                         <div class="circle-text">
                             <span class="site-font-m">Pages</span>
@@ -148,7 +150,7 @@ if(isset($_SESSION['user_detail'])){
                 <td>
                     <div class="circle-detail center-align-bl">
                         <div class="circle">
-                            <img src="../resources/images/reads.png" style="opacity:0.7;" alt="Number of pages.">
+                            <img class="icon" src="../resources/images/reads.png"  alt="Number of pages.">
                         </div>
                         <div class="circle-text">
                             <span class="site-font-m">Reads</span>
@@ -160,7 +162,7 @@ if(isset($_SESSION['user_detail'])){
                 <td>
                     <div class="circle-detail center-align-bl">
                         <div class="circle">
-                            <img src="../resources/images/copies1.png" style="opacity:0.7;" alt="Number of pages.">
+                            <img class="icon" src="../resources/images/copies1.png"  alt="Number of pages.">
                         </div>
                         <div class="circle-text">
                             <span class="site-font-m">Copies</span>
@@ -180,8 +182,8 @@ if(isset($_SESSION['user_detail'])){
     if(isset($_SESSION['user_detail'])) {
          echo "<a class=\"border-button\" onclick=\"showReviewBox();\" style=\"padding:4px 10px;margin:10px 0px 0px 0px;border-color:#222233;color:#222233;position:absolute;right: 20px;top: 542px;\" href=\"javascript: void(0);\">Write a review</a>"; 
     }else{
-            $message = base64_encode(urlencode("Please sign in to write a review"));
-         echo "<a class=\"border-button\" href=\"". $header_paths['public'] . "/login.php?message=$message"."\" style=\"padding:4px 10px;margin:10px 0px 0px 0px;border-color:#222233;color:#222233;position:absolute;right: 20px;top: 542px;\" >Write a review</a>";
+        $message = base64_encode(urlencode("Please sign in to write a review"));
+        echo "<a class=\"border-button\" href=\"". $header_paths['public'] . "/login.php?message=$message"."\" style=\"padding:4px 10px;margin:10px 0px 0px 0px;border-color:#222233;color:#222233;position:absolute;right: 20px;top: 542px;\" >Write a review</a>";
     }
     
     ?>
@@ -211,7 +213,7 @@ if(isset($_SESSION['user_detail'])){
 
                                     //date
                                     echo "<td style=\"padding-top:5px;vertical-align:text-top;\">";
-                                        echo "<span>" . $review->date . "</span>";
+                                        echo "<span class=\"site-font-m\" style=\"color:rgba(0,0,0,0.8);\">" . $review->date . "</span>";
                                     echo "</td>";
                                 echo "<tr>";
 

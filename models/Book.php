@@ -50,4 +50,39 @@ class Book{
     }
 } 
 
+
+class BookCheckout{
+    public  $checkout_id;
+    public  $checkout_date;
+    public  $return_date;
+    public  $isbn;
+    public  $user_id;
+    public  $admin_id;
+    public  $is_returned;
+
+    public function __construct($_id,$_date, $_return_date, $_isbn, $_userId, $_admin_id, $_isreturned){
+        $this->checkout_id = $_id;
+        $this->checkout_date = $_date;
+        $this->return_date = $_return_date;
+        $this->isbn= $_isbn;
+        $this->user_id= $_userId;
+        $this->admin_id = $_admin_id;
+        $this->is_returned = $_isreturned;
+    }
+
+}
+
+class BookShelfEntry{
+
+    public $book;
+    public $bookCheckout;
+    public $status;
+
+    public function __construct($_book ,$_bookcheckout,$_status){
+        $this->book = $_book;
+        $this->bookCheckout = $_bookcheckout; 
+        $this->status = $_status;
+    }
+}
+
 ?>
