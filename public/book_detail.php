@@ -86,7 +86,7 @@ if(isset($_SESSION['user_detail'])){
                     
                     foreach($CurrentBook->author_ids as $author_id){
                         $author = getAuthor($conn,$author_id);
-                        echo "<a href=\"#\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
+                        echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
                         if(count($CurrentBook->author_ids)>0 ){
                             echo "&nbsp&nbsp"; 
                         }

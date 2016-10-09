@@ -1,0 +1,45 @@
+.explore-container{
+    width: 100%;
+    min-height: 400px;
+    overflow-x: auto;
+}
+
+.explore-container h2{
+    margin:0px;
+    padding-top:10px;
+    padding-left: 10px;
+}
+
+.explore-container td{
+    vertical-align: top;    
+}
+
+.explore-container p{
+    margin: 0px;
+}
+
+.author-port-td{
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.author-port-td:hover{
+    background-color: rgba(255,255,255,0.1);
+}
+
+.author-port-td img{
+    border-radius:50%;
+    width:100px;
+    border: 2px solid #8c8ccc;
+    background-color: #655f6d
+}
+
+.author-port-td a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.top-authors{
+    width: 100%;
+    margin-top: 20px;
+}

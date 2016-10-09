@@ -47,4 +47,62 @@ function printBook($book){
                             echo "</a>"; 
 }
 
+function printBookMoreDetail($book){
+    global $header_paths;
+    global $conn;
+    echo "<table style=\"width:300px;max-width:300px;\">";
+                    echo "<tr>";
+                        //cover image
+                        echo "<td rowspan=\"4\" style=\"width:125px;\">";
+                                echo "<a href=\"". $header_paths['public'].'/book_detail.php?isbn='. $book->isbn."\" >";
+                                    echo "<img src=\"". $header_paths['images'] .'/books/'. $book->cover_image ."\" style=\"width:125px;height:180px;margin-right:10px;\" />";
+                                    echo "</a>";
+                        echo "</td>";
+
+                        //title
+                        echo "<td style=\"height:30px;\">";
+                               echo "<a style=\"text-decoration:none;color:#222;\" href=\"". $header_paths['public'].'/book_detail.php?isbn='. $book->isbn."\" >";
+                                    echo "<p class=\"title text-wrap\" style=\"max-width:160px;width:160px;font-size:18px\">". $book->title ."</p>";
+                                echo "</a>"; 
+                        echo "</td>";
+
+                    echo "</tr>";
+
+                    echo "<tr>";
+                        //authors
+                        echo "<td style=\"height:30px;\">";
+                        echo "<span class=\"author text-wrap\" style=\"font-size:14px\">by&nbsp";
+                                    
+                        foreach($book->author_ids as $author_id){
+                            $author = getAuthor($conn,$author_id);
+                            echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
+                            if(count($book->author_ids)>1 ){
+                                echo ", &nbsp <br>"; 
+                            }
+                        }
+                                      
+                        echo "</span>";
+                        echo "</td>";
+
+                    echo "</tr>";
+
+                    //rating stars
+                    echo "<tr>";
+                        echo "<td>";
+                                echo getRatingStars(getRatingForBook($conn,$book->isbn));
+                        echo "</td>";
+
+                    echo "</tr>";
+                    
+                    //num of reads
+                    echo "<tr>";
+                        echo "<td>";
+                           echo  "<span >". $book->getNumOfReadsFormatted() ."&nbsp reads</span>";
+                        echo "</td>";
+
+                    echo "</tr>";
+
+                echo "</table>";
+}
+
 ?>

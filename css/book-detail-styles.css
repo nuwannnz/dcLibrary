@@ -81,30 +81,6 @@
     display: inline-block;
 }
 
-
-.rating-star,.rating-star-selected{        
-    width:20px;
-    height:20px;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.rating-star{
-    background-image: url('../resources/images/nstar-not.png');
-}
-
-.rating-star-selected{
-    background-image: url('../resources/images/nstar.png');
-}
-
-.rating-container{
-    display:inline-block;
-    position:absolute;
-    bottom :20px;
-    right:10px;
-    height: 30px;
-}
-
 .circle-detail-table{
     width: 100%;    
     margin-top: 25px;

@@ -15,6 +15,7 @@ require_once($paths['include'] . '/connection.php');
 //createBookCheckouts();
 //createBookCheckins();
 //createReviews();
+//populateNumOfReads();
 
 $description_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porta ipsum at elit porta, at tempor nulla consectetur. Quisque eget libero ac mauris posuere aliquam nec non eros. Quisque turpis lorem";
 
@@ -361,6 +362,21 @@ function randomizeUserReads(){
         }
     }
 
+}
+
+function populateNumOfReads(){
+    global $conn;
+    
+    $query_select_books = "SELECT `isbn` FROM `book`"; 
+    $result_select_books = mysqli_query($conn,$query_select_books);
+    while($row_select_books = mysqli_fetch_assoc($result_select_books)){
+         $numOfReads = mt_rand(0,400); 
+         $query_update_reads = "UPDATE `book` SET `num_of_reads`='$numOfReads' WHERE `isbn`='".$row_select_books['isbn']."'"; 
+         $result_update_reads = mysqli_query($conn,$query_update_reads);
+         if(mysqli_affected_rows($conn) != 1){
+              echo "failed to update user reads";
+         }
+    };
 }
 
 //helper functions 

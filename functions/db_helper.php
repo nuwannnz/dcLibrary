@@ -250,4 +250,44 @@ function getUserBookList($conn,$userId){
     };
     return $list;
 }
+
+function getTopBooks($conn,$count){
+    $query_select_topbooks = "SELECT `isbn` , avg(`rating`) as `avg_rating` FROM `review` GROUP BY `isbn` ORDER BY `avg_rating` DESC LIMIT 0,$count"; 
+    $result_select_topbooks = mysqli_query($conn,$query_select_topbooks);
+    $books = array();
+    while($row_select_topbooks = mysqli_fetch_assoc($result_select_topbooks)){ 
+         $books[] = getBook($conn,$row_select_topbooks['isbn']);
+    };
+    return $books;
+}
+
+function getTopAuthors($conn,$count){
+    
+    $query_select_top_reads = "SELECT `isbn` FROM `book` ORDER BY `num_of_reads` DESC LIMIT 0,$count"; 
+    $result_select_top_reads = mysqli_query($conn,$query_select_top_reads);
+    $authors = array();
+    while($row_select_top_reads = mysqli_fetch_assoc($result_select_top_reads)){ 
+         $query_select_author = "SELECT `author_id` FROM `book_author` WHERE `isbn`='". $row_select_top_reads['isbn']."' "; 
+         $result_select_author = mysqli_query($conn,$query_select_author);
+         while($row_select_author = mysqli_fetch_assoc($result_select_author)){ 
+             $authors[] = getAuthor($conn,$row_select_author['author_id']);
+         };
+    };
+    return $authors;
+}
+
+function getAllBooks($conn,$count=0){
+    if($count > 0 ){
+        $query_select_books = "SELECT `isbn` FROM `book` LIMIT 0,$count"; 
+    }else if($count==0){
+        $query_select_books = "SELECT `isbn` FROM `book`";
+    }
+    $result_select_books = mysqli_query($conn,$query_select_books);
+    $books = array();
+    while($row_select_books = mysqli_fetch_assoc($result_select_books)){ 
+         $books[] = getBook($conn,$row_select_books['isbn']);
+    };
+    return $books;
+}
+
 ?>
