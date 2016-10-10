@@ -71,7 +71,7 @@
 
     <table class="tabs">
         <tr>
-            <td style="width:200px;vertical-align:top;padding-left:0px;">
+            <td style="width:200px;vertical-align:top;padding-left:0px;background-color:#f1f1f1;">
                 <div class="tab-links">
                 <ul> 
                     <li> <a class="tablink" onclick="changeTab(event,0);" href="javascript: void(0);">Personal Details</a></li>
