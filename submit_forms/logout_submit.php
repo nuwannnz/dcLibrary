@@ -6,5 +6,10 @@ include_once($paths['functions'] . '/navigation_helpers.php');
 endSession();
 
 //redirect to the signin page.
-goToSignInPage('Logged out successfully.');
+if(strlen($_GET['message']) > 0){
+    $message = urldecode(base64_decode($_GET['message']));
+    goToSignInPage($message);
+}else{
+    goToSignInPage('Logged out successfully.');
+}
 ?>

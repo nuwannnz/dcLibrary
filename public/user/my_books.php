@@ -252,6 +252,29 @@ if($CurrentUser->image == null){
 
         </div><!-- end of tab content container-->
         <script src="<?php echo $header_paths['js'] . '/tabcontrol.js'; ?>"></script>
+        
+        <script>
+            
+            this.onload = function (){
+                            tablinks = document.getElementsByClassName("tablink");
+                            if(getGETTab() != false){
+                                tablinks[getGETTab()].click();
+                            }else{
+                                tablinks[0].click();
+                            }
+                        }
+
+            function getGETTab(){   
+                var getPara =  this.window.location.search.replace("?"," ");
+
+                if(getPara.length < 3){
+                    return false;
+                }
+
+                var tabNum = getPara.split("=")[getPara.split("=").length-1];
+                return tabNum;
+            }
+        </script>
 
     </div><!-- end of tabs-->
 </div><!-- end of content container-->

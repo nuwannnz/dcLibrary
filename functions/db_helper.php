@@ -43,7 +43,7 @@ function getUser($conn,$userId){
 
     $row_select_user = mysqli_fetch_assoc($result_select_user);
 
-    $query_select_reguser = "SELECT `fname`,`lname` FROM `registered_user` WHERE `user_reg_id`='$userId'";
+    $query_select_reguser = "SELECT `fname`,`lname`,`email` FROM `registered_user` WHERE `user_reg_id`='$userId'";
     $result_select_reguser = mysqli_query($conn,$query_select_reguser);
 
     $row_select_reguser = mysqli_fetch_assoc($result_select_reguser);
@@ -52,6 +52,7 @@ function getUser($conn,$userId){
         $userId,
         $row_select_reguser['fname'],
         $row_select_reguser['lname'],
+        $row_select_reguser['email'],
         $row_select_user['user_image'],
         $row_select_user['score']
     );
@@ -288,6 +289,87 @@ function getAllBooks($conn,$count=0){
          $books[] = getBook($conn,$row_select_books['isbn']);
     };
     return $books;
+}
+
+function checkUsernameExists($conn,$uname){
+    $query_select_username = "SELECT COUNT(`user_reg_id`) AS `userCount` FROM `user` WHERE `username`='$uname' "; 
+    $result_select_username = mysqli_query($conn,$query_select_username);
+    $row_select_username = mysqli_fetch_assoc($result_select_username);
+
+    if($row_select_username['userCount'] == 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function updateUsername($conn,$userId,$uname){
+
+    $query_update_username = "UPDATE `user` SET `username`='$uname' WHERE `user_reg_id`='$userId'"; 
+    $result_update_username = mysqli_query($conn,$query_update_username);
+    if(mysqli_affected_rows($conn) != 1){
+         return false;
+    }
+    return true;
+}
+
+function checkUserPassword($conn,$userId,$pword){
+    $query_select_pword = "SELECT COUNT(`user_reg_id`) as `userCount` FROM `user` WHERE `user_reg_id`='$userId' AND `password`='". sha1($pword) ."'"; 
+    $result_select_pword = mysqli_query($conn,$query_select_pword);
+    $row_select_pword = mysqli_fetch_assoc($result_select_pword);
+
+    if($row_select_pword['userCount'] == 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function updatePassword($conn,$userId,$pword){
+    $query_update_pword = "UPDATE `user` SET `password`='". sha1($pword)."' WHERE `user_reg_id`='$userId'"; 
+    $result_update_pword = mysqli_query($conn,$query_update_pword);
+    if(mysqli_affected_rows($conn) != 1){
+         return false;
+    }
+    return true;
+}
+
+function checkEmailExists($conn,$email){
+    $query_select_email = "SELECT COUNT(`user_reg_id`) as emailCount FROM `registered_user` WHERE `email`='$email'"; 
+    $result_select_email = mysqli_query($conn,$query_select_email);
+    $row_select_email = mysqli_fetch_assoc($result_select_email);
+
+    if($row_select_email['emailCount'] == 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function updateUserDetails($conn,$userId,$fname,$lname,$email){
+    $query_update_userDetails = "UPDATE `registered_user` SET `fname`='$fname' , `lname`='$lname' , `email`='$email' WHERE `user_reg_id`='$userId'"; 
+    $result_update_userDetails = mysqli_query($conn,$query_update_userDetails);
+    if(mysqli_affected_rows($conn) == 1){
+         return "Updated details successfully";
+    }else if(mysqli_affected_rows($conn) == 0){
+        return "Same information";
+    }else if(mysqli_affected_rows($conn) == -1){
+        return "Failed to update user details";
+    }
+}
+
+function deleteUserAccount($conn,$userId){
+    //delete user
+    $query_delete_user = "DELETE FROM `user` WHERE `user_reg_id`='$userId'"; 
+    $result_delete_user = mysqli_query($conn,$query_delete_user);
+    $row_delete_user = mysqli_fetch_assoc($result_delete_user);
+
+    //delete user book list
+    $query_delete_userBookList = "DELETE FROM `user_book_list` WHERE `user_reg_id`='$userId'"; 
+    $result_delete_userBookList = mysqli_query($conn,$query_delete_userBookList);
+    $row_delete_userBookList = mysqli_fetch_assoc($result_delete_userBookList);
+    
+
 }
 
 ?>

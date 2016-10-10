@@ -21,22 +21,3 @@ function changeTab(event,tabIndex){
     event.currentTarget.className += " active-tab";
 }
 
-this.onload = function (){
-    tablinks = document.getElementsByClassName("tablink");
-    if(getGETTab() != false){
-        tablinks[getGETTab()].click();
-    }else{
-        tablinks[0].click();
-    }
-}
-
-function getGETTab(){   
-    var getPara =  this.window.location.search.replace("?"," ");
-
-    if(getPara.length < 3){
-        return false;
-    }
-
-    var tabNum = getPara.split("=")[getPara.split("=").length-1];
-    return tabNum;
-}

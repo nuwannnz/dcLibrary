@@ -6,13 +6,15 @@ class User{
     private $lname;
     public $image;
     public $score;
+    public $email;
 
-    public function __construct($_id , $_fname ,$_lname ,$_image, $_score){
+    public function __construct($_id , $_fname ,$_lname ,$_email,$_image, $_score){
         $this->id = $_id;
         $this->fname = $_fname;
         $this->lname = $_lname;
         $this->image = $_image;
         $this->score = $_score;         
+        $this->email = $_email;
     }
 
     public function getFullName(){

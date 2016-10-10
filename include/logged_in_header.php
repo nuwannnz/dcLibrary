@@ -14,7 +14,7 @@
                     <div class="searchbox-container">
                         <form action="" onsubmit="return submitSearch();">
                             <input id="searchText" class="searchbox" type="text" placeholder="Search books, authors..." >
-                            <input type="submit" class="searchbox" id="searchSubmit" value="" />
+                            <input type="submit" class="searchbox" id="searchSubmit" value="" style="margin:0px;" />
                         </form>
                     </div>
                     
@@ -23,8 +23,8 @@
                     
                     <div style="margin-top: -50px;height: 50px;max-width: 300px;margin-left: 500px;" >
                         <ul class="menu" style="padding-top:9px;">
-                            <li><a class="borderless-button" href="#">Explore</a></li>
-                            <li><a class="borderless-button" href="#">My books</a></li>
+                            <li><a class="borderless-button" href="<?php echo $header_paths['public'] . '/explore_books.php' ?>">Explore</a></li>
+                            <li><a class="borderless-button" href="<?php echo $header_paths['public'] . '/user/my_books.php' ?>">My books</a></li>
                         </ul>
                     </div>
 
@@ -45,8 +45,7 @@
                     <div class="dropdown-menu-container">
                         <div class="small-rectangle"></div>
                         <ul >
-                            <li> <a href="#">My profile</a>   </li>
-                            <li> <a href="#">Settings</a>   </li>
+                            <li> <a href="<?php echo $header_paths['public'] . '/user/settings_page.php' ?>">Settings</a>   </li>
                             <li> <a href="<?php echo $header_paths['submit_forms'] . '/logout_submit.php'; ?>">Log out</a>   </li>
                             
                         </ul>

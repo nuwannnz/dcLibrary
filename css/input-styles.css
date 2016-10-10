@@ -41,6 +41,16 @@ input:focus{
     
 }
 
+input[type=submit]:disabled,.input-button:disabled{
+    background-color: #aaa;
+    border-color: #aaa;
+    color:#fff;
+}
+
+input[type=submit]:disabled:hover,.input-button:disabled:hover{
+    cursor: default;
+}
+
 .error-text{
     display: inline-block;
     background-color: #e07e7e;
