@@ -372,4 +372,25 @@ function deleteUserAccount($conn,$userId){
 
 }
 
+function getQueryBooks($conn,$term){
+    $query_select_book = "SELECT `isbn` FROM `book` WHERE `book_title` LIKE '%".$term ."%' "; 
+    $result_select_book = mysqli_query($conn,$query_select_book);
+    $books = array();
+    while($row_select_book = mysqli_fetch_assoc($result_select_book)){ 
+         $books[] = getBook($conn,$row_select_book['isbn']);
+    };
+
+    return $books;
+}
+
+function getQueryAuthors($conn,$term){
+    $query_select_author = "SELECT `author_id` FROM `author` WHERE `author_fname` LIKE '%". $term ."%' OR `author_lname` LIKE '%". $term ."%' "; 
+    $result_select_author = mysqli_query($conn,$query_select_author);
+    $authors = array();
+    while($row_select_author = mysqli_fetch_assoc($result_select_author)){ 
+         $authors[] = getAuthor($conn,$row_select_author['author_id']);
+    };
+    return $authors;
+}
+
 ?>

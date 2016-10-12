@@ -12,9 +12,9 @@ class User{
         $this->id = $_id;
         $this->fname = $_fname;
         $this->lname = $_lname;
-        $this->image = $_image;
         $this->score = $_score;         
         $this->email = $_email;
+        $this->image = $_image;              
     }
 
     public function getFullName(){

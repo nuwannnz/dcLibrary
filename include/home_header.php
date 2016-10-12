@@ -13,6 +13,7 @@
 
                     <div style="position:absolute;right:10px;top:50%;margin-top:-15px;" >
                         <ul class="menu">
+                            <li><a class="border-button" href="explore_books.php">Explore Books</a></li>
                             <li><a class="border-button" href="register.php">Register</a></li>
                             <li><a class="border-button" href="login.php">Sign in</a></li>
                         </ul>

@@ -12,8 +12,8 @@
                     </div> <!-- end of logo container-->
                     
                     <div class="searchbox-container">
-                        <form action="" onsubmit="return submitSearch();">
-                            <input id="searchText" class="searchbox" type="text" placeholder="Search books, authors..." >
+                        <form action="<?php echo $header_paths['public'] .'/user/book_search.php' ?>" onsubmit="return submitSearch();">
+                            <input id="searchText" class="searchbox" type="text" name="q" placeholder="Search books, authors..." >
                             <input type="submit" class="searchbox" id="searchSubmit" value="" style="margin:0px;" />
                         </form>
                     </div>

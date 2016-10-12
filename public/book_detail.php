@@ -202,7 +202,8 @@ if(isset($_SESSION['user_detail'])){
                                 echo "<tr>";
                                     //image
                                     echo "<td style=\"width:48px;\">";
-                                        echo "<img src=\"".$header_paths['images'] . '/users/' .$user->image."\" />";
+                                        $userImage = $user->image == null ? 'default.png' : $user->image; 
+                                        echo ("<img src=\"".$header_paths['images'] . '/users/' . $userImage ."\" />");
                                     echo "</td>";
 
                                     //name

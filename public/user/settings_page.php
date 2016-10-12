@@ -115,7 +115,7 @@ ERROR_MESSAGE;
                         <input  type="hidden" name="currentEmail"  value="<?php echo $CurrentUser->email; ?>"  >                                                
 
                         <input class="center-align-bl site-font-m " type="submit" name="saveDetails" id="saveDetails" value="Save"  >
-                        
+                    
                         <script>
                             function onUnameChange(event){
                                 var saveBtn = document.getElementById('saveUname');

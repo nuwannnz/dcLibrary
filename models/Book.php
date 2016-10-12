@@ -33,10 +33,11 @@ class Book{
         $this->genre_id = $_genre_id;
         $this->author_ids = $_author_ids;
         $this->num_of_reads = $_num_of_reads;
-        $this->cover_image = $_cover_image;
         $this->num_of_copies = $_num_of_copies;
         $this->page_count = $_page_count;
-        $this->added_on = $_added_on;
+        $this->added_on = $_added_on;                
+        $this->cover_image = $_cover_image;
+        
     } 
 
     public function getNumOfReadsFormatted(){

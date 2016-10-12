@@ -10,7 +10,11 @@ class Author{
         $this->id = $_id;
         $this->fname = $_fname;
         $this->lname = $_lname;
-        $this->image = $_image;
+        if($_image == null){
+            $this->image = 'default.png';    
+        }else{
+            $this->image = $_image;
+        }
     }
 
     function getFullName(){

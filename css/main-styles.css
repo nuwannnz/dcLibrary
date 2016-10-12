@@ -150,6 +150,8 @@ ul.menu li{
     text-align: center;
     margin:0px 5px;
     padding-top: 4px;
+    padding-left:5px;
+    padding-right:5px;
     border-radius: 5px;
     font-family: dosis-medium;
     background-color: transparent;
