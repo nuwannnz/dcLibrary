@@ -137,6 +137,7 @@ function getReviewsForBook($conn,$isbn){
 
     $query_select_review = "SELECT * FROM `review` WHERE `isbn`='$isbn'"; 
     $result_select_review = mysqli_query($conn,$query_select_review);
+    $reviews = array();
     while($row_select_review = mysqli_fetch_assoc($result_select_review)){ 
          $reviews[] = new Review(
              $isbn,
@@ -180,6 +181,90 @@ function addBookToList($conn,$isbn,$userId){
          return false;
     }
     return true;    
+}
+
+function addNewBook($conn,$book){
+    $query_insert_book = "INSERT INTO `book` (`isbn`, `book_title`, `book_description`, `published_year`, `genre_id`, `num_of_reads`, `cover_image`, `num_of_copies`, `page_count`, `added_date`) VALUES ('".$book->isbn."', '".$book->title."', '".$book->description."', '".$book->year."', '".$book->genre_id."', 0, '".$book->cover_image."', '".$book->num_of_copies."', '".$book->page_count."', '".date("Y-m-d",time())."')"; 
+    $result_insert_book = mysqli_query($conn,$query_insert_book);
+    if(mysqli_affected_rows($conn) == 1){
+         //build up the author book relationships
+         foreach ($book->author_ids as $author_id) {                        
+            $query_insert_bookAuthor = "INSERT INTO `book_author` (`isbn`,`author_id`) VALUES('".$book->isbn."','$author_id')"; 
+            $result_insert_bookAuthor = mysqli_query($conn,$query_insert_bookAuthor);
+            if(mysqli_affected_rows($conn) == -1){
+                return false;
+            }
+         }
+         return true;
+    }else{
+        return false;
+    }
+}
+
+function updateBook($conn,$book){
+    $query_update_book = "UPDATE `book` SET `book_title`='".$book->title."', `book_description`='".$book->description."', `published_year`='".$book->year."',`genre_id`='".$book->genre_id."',`cover_image`='".$book->cover_image."',`num_of_copies`='".$book->num_of_copies."',`page_count`='".$book->page_count."' WHERE `isbn`='".$book->isbn."' "; 
+    $result_update_book = mysqli_query($conn,$query_update_book);
+    if(mysqli_affected_rows($conn) == 1 || mysqli_affected_rows($conn) == 0){
+         //update author book relationship
+         $oldIds = getAuthorIdsForBook($conn,$book->isbn);
+         foreach ($book->author_ids as $author_id) {
+             foreach ($oldIds as $oldId) {
+                 if($oldId == $author_id){
+                     continue;
+                 }else{
+                      //update a new record
+                    $query_insert_bookAuthor = "INSERT INTO `book_author` (`isbn`,`author_id`) VALUES('".$book->isbn."','$author_id')"; 
+                    $result_insert_bookAuthor = mysqli_query($conn,$query_insert_bookAuthor);
+                    if(mysqli_affected_rows($conn) == -1){
+                        return false;
+                    }
+                 }
+            }                
+         }
+         return true;
+    }else if(mysqli_affected_rows($conn) == -1){
+        return false;
+    }
+}
+
+
+function deleteBook($conn,$isbn){
+    //delete from book table
+    $query_delete_book = "DELETE FROM `book` WHERE `isbn`='$isbn'"; 
+    $result_delete_book = mysqli_query($conn,$query_delete_book);
+    if(mysqli_affected_rows($conn) == 1){
+        //delete from book_author table
+        $query_delete_bookAuthor = "DELETE FROM `book_author` WHERE `isbn`='$isbn'"; 
+        $result_delete_bookAuthor = mysqli_query($conn,$query_delete_bookAuthor);
+        if(mysqli_affected_rows($conn) != 1){
+             $query_delete_bookReview = "DELETE FROM `review` WHERE `isbn`='$isbn' "; 
+             $result_delete_bookReview = mysqli_query($conn,$query_delete_bookReview);
+             if(mysqli_affected_rows($conn) != 1){
+                  $query_delete_user_Book = "DELETE FROM `user_book_list` WHERE `isbn`='$isbn'"; 
+                  $result_delete_user_Book = mysqli_query($conn,$query_delete_user_Book);
+                  if(mysqli_affected_rows($conn) != 1){
+                       return true;
+                  }else{
+                      return false;
+                  }
+             }
+        }else{
+            return false;
+        }
+    }else{
+        return false;        
+    }
+
+}
+
+
+function checkIsbnExists($conn,$isbn){
+    
+    if(!getBook($conn,$isbn)){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 function removeFromBookList($conn,$isbn,$userId){
@@ -279,9 +364,9 @@ function getTopAuthors($conn,$count){
 
 function getAllBooks($conn,$count=0){
     if($count > 0 ){
-        $query_select_books = "SELECT `isbn` FROM `book` LIMIT 0,$count"; 
+        $query_select_books = "SELECT `isbn` FROM `book` ORDER BY `added_date` DESC LIMIT 0,$count"; 
     }else if($count==0){
-        $query_select_books = "SELECT `isbn` FROM `book`";
+        $query_select_books = "SELECT `isbn` FROM `book` ORDER BY `added_date` DESC";
     }
     $result_select_books = mysqli_query($conn,$query_select_books);
     $books = array();
@@ -289,6 +374,28 @@ function getAllBooks($conn,$count=0){
          $books[] = getBook($conn,$row_select_books['isbn']);
     };
     return $books;
+}
+
+function getAllAuthors($conn){
+    $query_select_author = "SELECT `author_id` FROM `author`"; 
+    $result_select_author = mysqli_query($conn,$query_select_author);
+    $authors = array();
+    while($row_select_author = mysqli_fetch_assoc($result_select_author)){ 
+         $authors[] = getAuthor($conn,$row_select_author['author_id']);
+    };
+    return $authors;
+}
+
+function getAllGenres($conn){
+    
+    $query_select_genre = "SELECT `genre_id` FROM `genre`"; 
+    $result_select_genre = mysqli_query($conn,$query_select_genre);
+    $genres = array();
+    while($row_select_genre = mysqli_fetch_assoc($result_select_genre)){ 
+         $genres[] = getGenre($conn,$row_select_genre['genre_id']);
+    };
+
+    return $genres;
 }
 
 function checkUsernameExists($conn,$uname){
@@ -391,6 +498,18 @@ function getQueryAuthors($conn,$term){
          $authors[] = getAuthor($conn,$row_select_author['author_id']);
     };
     return $authors;
+}
+
+function getAdmin($conn,$adminId){
+    global $paths;
+    include_once($paths['models'] . '/Admin.php');
+
+    $query_select_admin = "SELECT `admin_name` FROM `admin` WHERE `admin_id`='$adminId'"; 
+    $result_select_admin = mysqli_query($conn,$query_select_admin);
+    $row_select_admin = mysqli_fetch_assoc($result_select_admin);
+    $admin = new Admin($adminId,$row_select_admin['admin_name']);
+
+    return $admin;
 }
 
 ?>

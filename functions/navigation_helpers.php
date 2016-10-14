@@ -24,6 +24,36 @@ function goToSignInPage($message){
     }
 }
 
+function goToAddBookPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/add_book.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/add_book.php');
+    }
+}
+
+function goToBooksPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/books.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/books.php');
+    }
+}
+
+function goToAdminSignInPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin_login.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin_login.php');
+    }
+}
+
 function goToRegisterPage($message){        
     global $header_paths;
     if(!empty($message)){

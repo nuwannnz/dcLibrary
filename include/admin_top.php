@@ -11,7 +11,7 @@ include_once($paths['models'] . '/Admin.php');
 include_once($paths['include'] . '/connection.php');
 include_once($paths['functions'] . '/db_helper.php');
 
-$CurrentUser = getUser($conn,$_SESSION['user_detail']);
+$CurrentAdmin = getAdmin($conn,$_SESSION['admin_detail']);
 
 
 ?>

@@ -1,14 +1,12 @@
 <?php require_once('../config.php') ?>
-
+<?php require_once($paths['include'] . '/admin_top.php') ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>dcLibrary</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="../css/main-styles.css" rel="stylesheet">
-        <link href="../css/home-template-styles.css" rel="stylesheet">
-        <link href="<?php echo $header_paths['css'] . '/my-books-styles.css'; ?>" rel="stylesheet">        
+        <?php require_once($paths['include'] . '/admin_links.php') ?>        
     </head>
 
     

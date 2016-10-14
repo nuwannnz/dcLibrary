@@ -5,7 +5,7 @@
     text-align: center;
     }
 
-input{
+input,textarea{
     display: block;
     border-radius: 5px;        
     font-size: 19px;
@@ -15,12 +15,14 @@ input{
 }
 
 
-input[type=text],input[type=email],input[type=password]{
+input[type=text],input[type=email],input[type=number],input[type=password],textarea{
     width: 300px;
     height: 30px;    
     border:0.5px solid #c7c7c7;
     outline: 0px;
 }
+
+
 
 input[type=submit],.input-button{
     width: 314px;
@@ -36,7 +38,7 @@ input[type=submit]:hover,.input-button:hover{
     color:#fff;
 }
 
-input:focus{        
+input:focus,textarea:focus{        
     border:0.5px solid #222233;
     
 }
