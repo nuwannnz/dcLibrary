@@ -139,7 +139,7 @@ if($CurrentUser->image == null){
                         //overdue
                         echo "<td>";                        
                             if($bookshelf_entry->bookCheckout->is_returned == 0){
-                                if($bookshelf_entry->bookCheckout->return_date < strtotime(date("Y/m/d",time()))){
+                                if(strtotime($bookshelf_entry->bookCheckout->return_date) < strtotime(date("Y/m/d",time()))){
                                     echo "<p class=\"warning\">Yes</p>";
                                 }
                             }else{

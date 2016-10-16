@@ -44,6 +44,17 @@ function goToBooksPage($message){
     }
 }
 
+function goToCheckoutsPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/checkouts.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/checkouts.php');
+    }
+}
+
+
 function goToAdminSignInPage($message){        
     global $header_paths;
     if(!empty($message)){

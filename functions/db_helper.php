@@ -512,4 +512,42 @@ function getAdmin($conn,$adminId){
     return $admin;
 }
 
+function getRecentCheckouts($conn,$count=0){
+    global $paths;
+    include_once($paths['models'] . '/Book.php');
+
+    if($count >0){
+        $query_select_checkout = "SELECT * FROM `book_checkout` ORDER BY `date` DESC LIMIT 0,$count";
+    }else{
+        $query_select_checkout = "SELECT * FROM `book_checkout` ORDER BY `date` DESC"; 
+    }
+    $result_select_checkout = mysqli_query($conn,$query_select_checkout);
+    $checkouts = array();
+    while($row_select_checkout = mysqli_fetch_assoc($result_select_checkout)){ 
+        $checkouts[] = new BookCheckout(
+            $row_select_checkout['checkout_id'],
+            $row_select_checkout['date'],
+            $row_select_checkout['return_date'],
+            $row_select_checkout['isbn'],
+            $row_select_checkout['user_reg_id'],
+            $row_select_checkout['admin_id'],
+            $row_select_checkout['is_returned']
+        );
+    };
+    return $checkouts;
+}
+
+function addNewCheckout($conn,$checkout){
+    global $paths;
+    include_once($paths['models'] . '/Book.php');
+
+    $query_insert_checkout = "INSERT INTO `book_checkout` (`checkout_id`, `admin_id`, `user_reg_id`, `isbn`, `date`, `return_date`, `is_returned`) VALUES (NULL, '".$checkout->admin_id."', '".$checkout->user_id."', '".$checkout->isbn."', '".$checkout->checkout_date."', '".$checkout->return_date."', '0')"; 
+    $result_insert_checkout = mysqli_query($conn,$query_insert_checkout);
+    if(mysqli_affected_rows($conn) == 1){
+         return true;
+    }else{
+        return false;
+    }
+}
+
 ?>

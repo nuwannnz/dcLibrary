@@ -9,6 +9,10 @@ checkSession();
 
 if(isset($_SESSION['user_detail']) && isset($_POST['status'])) {
 
+//status 1 = want to read
+//       2 = currently reading
+//       3 = completed
+
 
     $status = $_POST['status'];    
     if($status == '1'){
@@ -37,6 +41,23 @@ function updateUserRead($status){
     if(mysqli_affected_rows($conn) != 1){
         echo "error";
     }
+
+    //also if status is completed we have to update num of reads of the book
+    if($_POST['status'] == 3){
+        $query_update_book = "UPDATE `book` SET `num_of_reads`=`num_of_reads` + 1 WHERE `isbn`='".$_POST['isbn']."'"; 
+        $result_update_book = mysqli_query($conn,$query_update_book);
+        if(mysqli_affected_rows($conn) != 1){
+             echo "Error updating num_of_reads";
+        }
+    }
+
+    //also if the user setting status to 1 or 2 for a previously completed book we have to update the reads
+    if($_POST['status']==1 || $_POST['status']==1){
+        //first check whether theres a previous book read
+        $query_select_read = "SELECT `isbn` FROM "; 
+        $result_select_read = mysqli_query($conn,$query_select_read);
+        $row_select_read = mysqli_fetch_assoc($result_select_read);
+    }    
 }
 
 
