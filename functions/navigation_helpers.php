@@ -65,6 +65,17 @@ function goToAddAuthorPage($message){
     }
 }
 
+
+function goToAuthorsPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/authors.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/authors.php');
+    }
+}
+
 function goToBooksPage($message){        
     global $header_paths;
     if(!empty($message)){

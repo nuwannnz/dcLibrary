@@ -160,9 +160,9 @@ ERROR_MESSAGE;
     </div>
 
 <script>
-        var deleteDialog = document.getElementById('confirmDeleteDialog');
-        var deleteauthorId = document.getElementById('deleteauthorId');
     
+        var deleteDialog = document.getElementById('confirmDeleteDialog');
+        var deleteauthorId = document.getElementById('deleteAuthorId');
     function confirmDelete(authorId){
 
         deleteauthorId.value =authorId;
@@ -170,7 +170,7 @@ ERROR_MESSAGE;
     }
 
     function onConfirmDelete(){
-        var deleteauthorId = document.getElementById('deleteauthorId');
+        var deleteauthorId = document.getElementById('deleteAuthorId');
         if(deleteauthorId.value == ''){
             return false;
         }else{
@@ -179,6 +179,7 @@ ERROR_MESSAGE;
     }
 
     function cancelDelete(){
+        
         deleteDialog.style.display = "none";
         deleteauthorId.value = '';
     }
