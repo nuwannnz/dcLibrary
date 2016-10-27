@@ -59,6 +59,12 @@ ERROR_MESSAGE;
 
 <form action="<?php echo $header_paths['submit_forms'] .'/user_submit.php' ?>" method="POST" onsubmit="return onAdd();"  >
    
+    <?php 
+        if($CurrentUser != null){
+            echo "<input type=\"hidden\" name=\"userId\" value=\"". $CurrentUser->id . "\" >";
+        }
+    ?>
+
     <label for="fname">First name</label>
     <input type="text" name="fname" value="<?php print($CurrentUser==null ? '' : $CurrentUser->fname) ?>">
 

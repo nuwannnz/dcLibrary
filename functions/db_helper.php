@@ -92,6 +92,19 @@ function addRegisteredUser($conn,$regUser){
     }
 }
 
+function updateRegisteredUser($conn,$user){
+    global $paths;
+    include_once($paths['models'] . '/User.php');
+
+    $query_update_regUser = "UPDATE `registered_user` SET `fname`='".$user->fname."', `lname`='".$user->lname."', `email`='".$user->email."' WHERE `user_reg_id`='".$user->id."'"; 
+    $result_update_regUser = mysqli_query($conn,$query_update_regUser);
+    if(mysqli_affected_rows($conn) >= 0 ){
+         return true;
+    }else if (mysqli_affected_rows($conn) == -1 ){
+        return false;
+    }
+}
+
 //this will update the user image of the given id 
 // with the given image 
 function updateUserImage($conn,$userId,$image){

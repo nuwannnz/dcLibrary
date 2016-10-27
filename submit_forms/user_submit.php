@@ -20,13 +20,13 @@ if(isset($_SESSION['admin_detail'])) {
         goToAddUserPage("Mandatory fields are missing.");
         exit();
     }
+    include_once($paths['models'] . '/User.php');
 
     if(isset($_POST['addUser']) && $_POST['addUser'] == "Add User"){
         //check whether the email exisits 
         if(!checkEmailExists($conn,$email)){
             
             //we can add the user now
-            include_once($paths['models'] . '/User.php');
 
             $user = new RegUser(
                 null,
@@ -48,6 +48,24 @@ if(isset($_SESSION['admin_detail'])) {
             exit();
         }
 
+    }else if(isset($_POST['saveUser']) && $_POST['saveUser'] == "Save User" && isset($_POST['userId'])){
+        $user = new RegUser(
+            $_POST['userId'],
+            $fname,
+            $lname,
+            $email
+        );
+
+        if(updateRegisteredUser($conn,$user)){
+            goToAddUserPage("Successfully updated the user.");
+            exit();
+        }else{
+            goToAddUserPage("Failed to update the user.");
+            exit();
+        }
+    }else{
+        goToErrorPage("Unauthorized Access!");
+        exit();    
     }
 
 }else{

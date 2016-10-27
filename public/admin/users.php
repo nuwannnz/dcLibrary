@@ -94,6 +94,7 @@ ERROR_MESSAGE;
                             echo "<th>Last name</th>";                            
                             echo "<th>Email</th>";
                             echo "<th></th>";
+                            echo "<th></th>";
                         echo "</tr>";
                         
                         foreach ($regUsers as $user) {
@@ -117,6 +118,14 @@ ERROR_MESSAGE;
                                 //email                               
                                 echo "<td>";
                                     echo "<p>". $user->email ."</p>";
+                              echo "</td>";
+
+
+                               //edit button                               
+                                echo "<td>";
+                                    echo "<a href=\"". $header_paths['public'] . '/admin/add_user.php?id=' . $user->id ."\">";
+                                        echo "<img src=\"". $header_paths['resources'] .'/images/edit.png'."\" style=\"width:25px;height:25px;\"/>";
+                                    echo "</a>";
                               echo "</td>";
 
                                 //remove button                               
