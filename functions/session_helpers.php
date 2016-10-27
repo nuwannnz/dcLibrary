@@ -18,7 +18,7 @@ function getSessionDetail(){
 
 function endSession(){
     checkSession();
-    session_unset($_SESSION['user_detail']);
+    session_unset($_SESSION['user_detail']);    
 }
 
 

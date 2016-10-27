@@ -34,6 +34,27 @@ function goToAddBookPage($message){
     }
 }
 
+function goToAddUserPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/add_user.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/add_user.php');
+    }
+}
+
+
+function goToUsersPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/users.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/users.php');
+    }
+}
+
 function goToBooksPage($message){        
     global $header_paths;
     if(!empty($message)){
@@ -54,6 +75,17 @@ function goToCheckoutsPage($message){
     }
 }
 
+
+
+function goToCheckinsPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/checkins.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/checkins.php');
+    }
+}
 
 function goToAdminSignInPage($message){        
     global $header_paths;

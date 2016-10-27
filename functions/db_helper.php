@@ -61,6 +61,37 @@ function getUser($conn,$userId){
     
 }
 
+function getAllRegUsers($conn){
+    global $paths;
+    include_once($paths['models'] . '/User.php');
+
+    $query_select_reguser = "SELECT * FROM `registered_user`"; 
+    $result_select_reguser = mysqli_query($conn,$query_select_reguser);
+    $users = array();
+    while($row_select_reguser = mysqli_fetch_assoc($result_select_reguser)){ 
+         $users[] = new RegUser(
+             $row_select_reguser['user_reg_id'],
+             $row_select_reguser['fname'],
+             $row_select_reguser['lname'],
+             $row_select_reguser['email']             
+         );
+    };
+    return $users;
+}
+
+function addRegisteredUser($conn,$regUser){
+    global $paths;
+    include_once($paths['models'] . '/User.php');
+
+    $query_insert_user = "INSERT INTO `registered_user` (`user_reg_id`,`fname`,`lname`,`email`) VALUES(NULL,'".$regUser->fname."','".$regUser->lname."','".$regUser->email."')"; 
+    $result_insert_user = mysqli_query($conn,$query_insert_user);
+    if(mysqli_affected_rows($conn) == 1){
+         return true;
+    }else if(mysqli_affected_rows($conn) == -1){
+        return false;
+    }
+}
+
 //this will update the user image of the given id 
 // with the given image 
 function updateUserImage($conn,$userId,$image){
@@ -75,6 +106,13 @@ function updateUserImage($conn,$userId,$image){
     }
 }
 
+
+function deleteRegisteredUser($conn,$userId){
+    $query_delete_user = "DELETE FROM `registered_user` WHERE `user_reg_id`='$userId'"; 
+    $result_delete_user = mysqli_query($conn,$query_delete_user);
+    
+    deleteUserAccount($conn,$userId);             
+}
 
 function getAuthor($conn,$id){
     global $paths;
@@ -307,11 +345,15 @@ function getBookShelfEntries($conn,$userId){
 
 }
 
-function getCheckout($conn,$isbn,$userId){
+function getCheckout($conn,$isbn,$userId,$id=0){
     global $paths;
     include_once($paths['models']. '/Book.php');
 
-    $query_select_checkout = "SELECT * FROM `book_checkout` WHERE `isbn`='$isbn' AND `user_reg_id`='$userId'"; 
+    if($id == 0){
+        $query_select_checkout = "SELECT * FROM `book_checkout` WHERE `isbn`='$isbn' AND `user_reg_id`='$userId'";    
+    }else{
+        $query_select_checkout = "SELECT * FROM `book_checkout` WHERE `checkout_id`='$id'"; 
+    }
     $result_select_checkout = mysqli_query($conn,$query_select_checkout);
     $row_select_checkout = mysqli_fetch_assoc($result_select_checkout);
 
@@ -325,6 +367,66 @@ function getCheckout($conn,$isbn,$userId){
         $row_select_checkout['is_returned']
     );
     return $checkout;
+}
+
+
+function getCheckin($conn,$id){
+    global $paths;
+    include_once($paths['models']. '/Book.php');
+
+    $query_select_checkin = "SELECT * FROM `book_checkin` WHERE `checkin_id`='$id'"; 
+    $result_select_checkin = mysqli_query($conn,$query_select_checkin);
+    $row_select_checkin = mysqli_fetch_assoc($result_select_checkin);
+
+    $checkin = new BookCheckin(
+        $id,
+        $row_select_checkin['checkout_id'],
+        $row_select_checkin['admin_id'],
+        $row_select_checkin['date']
+    );
+    return $checkin;
+}
+
+function addNewCheckin($conn,$checkin){
+    global $paths;
+    include_once($paths['models']. '/Book.php');
+
+    $query_insert_checkin = "INSERT INTO `book_checkin` (`checkin_id`,`checkout_id`,`admin_id`,`date`) VALUES(NULL,'".$checkin->checkout_id."','".$checkin->admin_id."','".$checkin->checkin_date."')"; 
+    $result_insert_checkin = mysqli_query($conn,$query_insert_checkin);
+    
+
+         //update the checkout
+         $query_update_checkout = "UPDATE `book_checkout` SET `is_returned`=1 WHERE `checkout_id`='".$checkin->checkout_id."'"; 
+         $result_update_checkout = mysqli_query($conn,$query_update_checkout);         
+    
+              //update user reads
+              $checkout = getCheckout($conn,0,0,$checkin->checkout_id);
+              $query_delete_user_read = "DELETE FROM `user_read` WHERE `isbn`='".$checkout->isbn."' AND `user_reg_id`='".$checkout->user_id."'"; 
+              $result_delete_user_read = mysqli_query($conn,$query_delete_user_read);
+              return true;
+              /*
+              if(mysqli_affected_rows($conn) == 1){
+                   return true;
+              }else if(mysqli_affected_rows($conn) == -1){
+                  return false;
+              }
+              */
+         
+    
+}
+
+function getRecentCheckins($conn,$count=0){
+    if($count>0){
+        $query_select_checkin = "SELECT * FROM `book_checkin` ORDER BY `date` DESC LIMIT 0,$count"; 
+    }else{
+        $query_select_checkin = "SELECT * FROM `book_checkin` ORDER BY `date` DESC ";
+    }
+    $result_select_checkin = mysqli_query($conn,$query_select_checkin);
+    $checkins = array();
+    while($row_select_checkin = mysqli_fetch_assoc($result_select_checkin)){ 
+         $checkins[] = getCheckin($conn,$row_select_checkin['checkin_id']);
+    }
+    return $checkins;
 }
 
 function getUserBookList($conn,$userId){
@@ -468,13 +570,11 @@ function updateUserDetails($conn,$userId,$fname,$lname,$email){
 function deleteUserAccount($conn,$userId){
     //delete user
     $query_delete_user = "DELETE FROM `user` WHERE `user_reg_id`='$userId'"; 
-    $result_delete_user = mysqli_query($conn,$query_delete_user);
-    $row_delete_user = mysqli_fetch_assoc($result_delete_user);
+    $result_delete_user = mysqli_query($conn,$query_delete_user);    
 
     //delete user book list
     $query_delete_userBookList = "DELETE FROM `user_book_list` WHERE `user_reg_id`='$userId'"; 
-    $result_delete_userBookList = mysqli_query($conn,$query_delete_userBookList);
-    $row_delete_userBookList = mysqli_fetch_assoc($result_delete_userBookList);
+    $result_delete_userBookList = mysqli_query($conn,$query_delete_userBookList);    
     
 
 }

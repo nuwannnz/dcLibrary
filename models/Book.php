@@ -86,4 +86,19 @@ class BookShelfEntry{
     }
 }
 
+
+class BookCheckin{
+    public $id;
+    public  $checkout_id;
+    public  $checkin_date;
+    public  $admin_id;    
+
+    public function __construct($_id,$_checkoutId,$_admin_id,$_date){
+        $this->id = $_id;
+        $this->checkout_id = $_checkoutId;
+        $this->checkin_date = $_date;        
+        $this->admin_id = $_admin_id;        
+    }
+
+}
 ?>

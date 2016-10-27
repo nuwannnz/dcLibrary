@@ -272,6 +272,8 @@ function createBookCheckouts(){
         }
     }
 
+}
+
 //this function will create book checkins
 function createBookCheckins(){
     global $conn;
@@ -284,8 +286,8 @@ function createBookCheckins(){
         removeElementFromArray($checkout_ids,$checkout_id);
 
         $date = date("Y-m-d", time() - mt_rand(100000,200000));
-
-        $query_insert_checkin = "INSERT INTO `book_checkin` (`checkin_id`, `checkout_id`, `date`) VALUES (NULL, '$checkout_id', '$date')";
+        $admin_id  = mt_rand(1,2);
+        $query_insert_checkin = "INSERT INTO `book_checkin` (`checkin_id`, `checkout_id`,`admin_id`, `date`) VALUES (NULL, '$checkout_id','$admin_id', '$date')";
         $result_insert_checkin = mysqli_query($conn,$query_insert_checkin);
 
         if(!mysqli_affected_rows($conn) > 0){
@@ -306,7 +308,7 @@ function createBookCheckins(){
 }
 
 
-}
+
 
 //this function will create reviews for books
 function createReviews(){
@@ -350,7 +352,7 @@ function randomizeUserReads(){
              "userId" => $row_select_user_reads['user_reg_id'],
              "isbn" => $row_select_user_reads['isbn'],
          );
-    };
+    }
     $completed_values = ["'1'","'0'",'NULL'];
     foreach ($user_reads as $user_read) {
         $isCompleted = $completed_values[array_rand($completed_values)];
@@ -376,7 +378,7 @@ function populateNumOfReads(){
          if(mysqli_affected_rows($conn) != 1){
               echo "failed to update user reads";
          }
-    };
+    }
 }
 
 //helper functions 
@@ -453,5 +455,8 @@ function removeElementFromArray(&$array ,$element){
         }
     }    
 }
+
+
+
 
 ?>

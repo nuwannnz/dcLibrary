@@ -26,3 +26,17 @@ function onFilter(filterText){
         xmlhttp.send();
     }
 }
+
+function onFilterCheckin(filterText){
+    if(filterText.length >0){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("checkinTable").innerHTML = this.responseText;
+            }
+        };
+        
+        xmlhttp.open("GET", "../../submit_forms/checkin_filter_submit.php?checkoutId=" + filterText, true);
+        xmlhttp.send();
+    }
+}

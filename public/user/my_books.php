@@ -141,6 +141,8 @@ if($CurrentUser->image == null){
                             if($bookshelf_entry->bookCheckout->is_returned == 0){
                                 if(strtotime($bookshelf_entry->bookCheckout->return_date) < strtotime(date("Y/m/d",time()))){
                                     echo "<p class=\"warning\">Yes</p>";
+                                }else{
+                                    echo "<p>No</p>";    
                                 }
                             }else{
                                 echo "<p>No</p>";
