@@ -130,7 +130,7 @@ ERROR_MESSAGE;
 
                                 //remove button                               
                                 echo "<td>";                                                                        
-                                        echo "<a class=\"close-button\" name=\"addToList\" type=\"submit\"  onclick=\"confirmDelete(".$user->id.")\" style=\"padding:2px 8px;\" >X</a>";                                        
+                                        echo "<a class=\"close-button\"  type=\"submit\"  onclick=\"confirmDelete(".$user->id.")\" style=\"padding:2px 8px;\" >X</a>";                                        
                                 echo "</td>";
 
                             echo "</tr>";

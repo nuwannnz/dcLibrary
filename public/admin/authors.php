@@ -77,69 +77,63 @@ ERROR_MESSAGE;
 ?>
     <div  >
         <div style="width:100%;position:relative;height:50px;">
-            <a class="border-button" href="<?php echo $header_paths['public'] . '/admin/add_book.php'; ?>" style="padding:4px 10px;border-color:#222233;margin:10px;color:#222233;position:absolute;right:0px;">Add a book</a>
+            <a class="border-button" href="<?php echo $header_paths['public'] . '/admin/add_author.php'; ?>" style="padding:4px 10px;border-color:#222233;margin:10px;color:#222233;position:absolute;right:0px;">Add a author</a>
         </div>
 
-        <h2 style="padding-left:10px;">All books</h2>
+        <h2 style="padding-left:10px;">All authors</h2>
         <?php 
 
-        $bookList = getAllBooks($conn);
-         if(count($bookList)>0){                                
-                    //book list table
+        $authors = getAllAuthors($conn);
+       
+         if(count($authors)>0){                                
+                    //author list table
                     echo "<table class=\"book-shelf\">";
                         echo "<tr>";
-                            echo "<th>Isbn</th>";
-                            echo "<th>Cover</th>";
-                            echo "<th>Title</th>";                            
-                            echo "<th>Copies</th>";                            
+                            echo "<th>Author id</th>";
+                            echo "<th>Image</th>";
+                            echo "<th>First name</th>";                            
+                            echo "<th>Last name</th>";                                                        
                             echo "<th></th>";
                             echo "<th></th>";
                         echo "</tr>";
                         
-                        foreach ($bookList as $book) {
+                        foreach ($authors as $author) {
                             echo "<tr>";
-                                
-                                // isbn
-                                echo "<td>";
-                                    echo "<p>". $book->isbn ."</p>";
-                                echo "</td>";                           
 
-
-                                //cover image
+                                //author id
                                 echo "<td>";
-                                    echo "<a href=\"". $header_paths['public'].'/book_detail.php?isbn='. $book->isbn."\" >";
-                                        echo "<img src=\"". $header_paths['images'] .'/books/'. $book->cover_image ."\" style=\"width:55px;height:80px;\" />";
+                                   echo "<p>". $author->id ."</p>";
+                                echo "</td>";
+
+                                 //image
+                                echo "<td>";
+                                    echo "<a href=\"". $header_paths['public'].'/author_detail.php?id='. $author->id."\" >";
+                                        echo "<img src=\"". $header_paths['images'] .'/authors/'. $author->image ."\" style=\"width:50px;height:50px;border-radius:50%;background-color:#333;\" />";
                                     echo "</a>";
                                 echo "</td>";
 
-                                //title
+                                //first name
                                 echo "<td>";
-                                    echo "<a style=\"text-decoration:none;color:#222;\" href=\"". $header_paths['public'].'/book_detail.php?isbn='. $book->isbn."\" >";
-                                        echo "<p>". $book->title ."</p>";
-                                    echo "</a>";
+                                    echo "<p>". $author->fname ."</p>";
                                 echo "</td>";
 
-                                // num of copies
+                                // last name
                                 echo "<td>";
-                                    echo "<p>". $book->num_of_copies ."</p>";
-                                echo "</td>";                           
+                                    echo "<p>". $author->lname ."</p>";
+                                echo "</td>";                                                           
 
-                                //edit button                               
+
+                               //edit button                               
                                 echo "<td>";
-                                    echo "<a href=\"". $header_paths['public'] . '/admin/add_book.php?isbn=' . $book->isbn ."\">";
+                                    echo "<a href=\"". $header_paths['public'] . '/admin/add_author.php?id=' . $author->id ."\">";
                                         echo "<img src=\"". $header_paths['resources'] .'/images/edit.png'."\" style=\"width:25px;height:25px;\"/>";
                                     echo "</a>";
                               echo "</td>";
 
                                 //remove button                               
-                                echo "<td>";                                    
-                                    
-
-                                        echo "<a class=\"close-button\" type=\"submit\"  onclick=\"confirmDelete(".$book->isbn.")\" style=\"padding:2px 8px;\" >X</a>";
-
-                                        
+                                echo "<td>";                                                                        
+                                        echo "<a class=\"close-button\" type=\"submit\"  onclick=\"confirmDelete(".$author->id.")\" style=\"padding:2px 8px;\" >X</a>";                                        
                                 echo "</td>";
-
 
                             echo "</tr>";
                         }
@@ -147,7 +141,7 @@ ERROR_MESSAGE;
 
                     echo "</table>";
                 }else{
-                     echo "<p class=\"center-align-bl center-align-in\" style=\"padding-top:50px;\"> No books here...</p>";
+                     echo "<p class=\"center-align-bl center-align-in\" style=\"padding-top:50px;\"> No authors here...</p>";
                 }
         
         
@@ -156,27 +150,28 @@ ERROR_MESSAGE;
 
     <div id="confirmDeleteDialog" >
         <div>
-            <h3>This book will be deleted permanently!</h3>
-            <form action="<?php echo $header_paths['submit_forms'] .'/delete_book_submit.php'; ?>" method="POST" onsubmit="return onConfirmDelete()">
-                <input type="hidden" id="deleteIsbn" name="deleteIsbn" >
-                <input class="center-align-bl" type="submit" id="deleteConfirmBtn" name="deleteConfirmBtn" value="Delete Book">
+            <h3>This author will be deleted permanently!</h3>
+            <form action="<?php echo $header_paths['submit_forms'] .'/delete_author_submit.php'; ?>" method="POST" onsubmit="return onConfirmDelete()">
+                <input type="hidden" id="deleteAuthorId" name="deleteAuthorId" >
+                <input class="center-align-bl" type="submit" id="deleteConfirmBtn" name="deleteConfirmBtn" value="Delete author">
                 <a class="center-align-bl" id="cancelBtn" onclick="cancelDelete();">Cancel</a>
             </form>
         </div>
     </div>
 
 <script>
-    function confirmDelete(isbn){
         var deleteDialog = document.getElementById('confirmDeleteDialog');
-        var deleteIsbn = document.getElementById('deleteIsbn');
+        var deleteauthorId = document.getElementById('deleteauthorId');
+    
+    function confirmDelete(authorId){
 
-        deleteIsbn.value = isbn;
+        deleteauthorId.value =authorId;
         deleteDialog.style.display ="block";
     }
 
     function onConfirmDelete(){
-        var deleteIsbn = document.getElementById('deleteIsbn');
-        if(deleteIsbn.value == ''){
+        var deleteauthorId = document.getElementById('deleteauthorId');
+        if(deleteauthorId.value == ''){
             return false;
         }else{
             return true;
@@ -184,8 +179,8 @@ ERROR_MESSAGE;
     }
 
     function cancelDelete(){
-        document.getElementById('confirmDeleteDialog').style.display = "none";
-        
+        deleteDialog.style.display = "none";
+        deleteauthorId.value = '';
     }
 </script>
 </div><!-- end of content container-->

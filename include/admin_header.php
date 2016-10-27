@@ -30,7 +30,7 @@
                         <div style="width:100%;text-align:center;min-height:40px;" >
                             <ul class="menu">
                                 <li><a class="border-button" href="<?php echo $header_paths['public'] .'/admin/books.php'; ?>">Books</a></li>
-                                <li><a class="border-button" href="">Authors</a></li>
+                                <li><a class="border-button" href="<?php echo $header_paths['public'] .'/admin/authors.php'; ?>">Authors</a></li>
                                 <li><a class="border-button" href="<?php echo $header_paths['public'] .'/admin/users.php'; ?>">Users</a></li>
                                 <li><a class="border-button" href="<?php echo $header_paths['public'] .'/admin/checkouts.php'; ?>">Checkouts</a></li>
                                 <li><a class="border-button" href="<?php echo $header_paths['public'] .'/admin/checkins.php'; ?>" >Checkins</a></li>                                                        

@@ -331,6 +331,7 @@ function removeFromBookList($conn,$isbn,$userId){
 function getBooksOfAuthor($conn,$id){
     $query_select_books = "SELECT `isbn` FROM `book_author` WHERE `author_id`='$id'"; 
     $result_select_books = mysqli_query($conn,$query_select_books);
+    $books = array();
     while($row_select_books = mysqli_fetch_assoc($result_select_books)){ 
          $books[] = getBook($conn,$row_select_books['isbn']);
     };

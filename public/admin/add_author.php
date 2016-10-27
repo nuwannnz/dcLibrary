@@ -14,7 +14,7 @@
                 margin-top:10px;
                 display:block;
             }
-                
+            
         </style>        
     </head>
 
@@ -27,11 +27,11 @@
 <?php 
 
 if(isset($_GET['id'])) {
-    echo "<h2>Edit user ( Register id:".$_GET['id']." )</h2>";
-    $CurrentUser = getUser($conn,$_GET['id']);
+    echo "<h2>Edit author ( Author id:".$_GET['id']." )</h2>";
+    $CurrentAuthor = getAuthor($conn,$_GET['id']);
 }else{
-    echo "<h2>Add a user</h2>";
-    $CurrentUser = null;
+    echo "<h2>Add a author</h2>";
+    $CurrentAuthor = null;
 }
 
  
@@ -49,30 +49,28 @@ ERROR_MESSAGE;
 
 ?>
 
-<form action="<?php echo $header_paths['submit_forms'] .'/user_submit.php' ?>" method="POST"   >
-   
-    <?php 
-        if($CurrentUser != null){
-            echo "<input type=\"hidden\" name=\"userId\" value=\"". $CurrentUser->id . "\" >";
-        }
+<form action="<?php echo $header_paths['submit_forms'] .'/author_submit.php' ?>" method="POST" onsubmit="return onAdd();" enctype="multipart/form-data" >
+    <?php
+     if($CurrentAuthor != null){     
+         echo "<input type=\"hidden\" name=\"authorId\" value=\"".$CurrentAuthor->id."\"  >";
+     }
     ?>
 
     <label for="fname">First name</label>
-    <input type="text" name="fname" value="<?php print($CurrentUser==null ? '' : $CurrentUser->fname) ?>">
+    <input type="text" name="fname" value="<?php print($CurrentAuthor==null ? '' : $CurrentAuthor->fname) ?>">
 
     <label for="lname">Last name</label>
-    <input type="text" name="lname" value="<?php print($CurrentUser==null ? '' : $CurrentUser->lname) ?>">
+    <input type="text" name="lname" value="<?php print($CurrentAuthor==null ? '' : $CurrentAuthor->lname) ?>">
 
-     <label for="email">Email</label>
-    <input type="email" name="email" value="<?php print($CurrentUser==null ? '' : $CurrentUser->email) ?>">
-   
+    <label for="authorImage">Cover image</label>
+    <input type="file" name="authorImage" id="authorImage" accept="image/png,image/jpeg" style="font-size:15px;">
 
     <?php 
     
-    if($CurrentUser == null){
-        echo "<input type=\"submit\" name=\"addUser\" value=\"Add User\">"; 
+    if($CurrentAuthor == null){
+        echo "<input type=\"submit\" name=\"addAuthor\" value=\"Add Author\">"; 
     }else{
-        echo "<input type=\"submit\" name=\"saveUser\" value=\"Save User\">";
+        echo "<input type=\"submit\" name=\"saveAuthor\" value=\"Save Author\">";
     }
     
     ?>    

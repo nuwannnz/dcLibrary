@@ -55,6 +55,16 @@ function goToUsersPage($message){
     }
 }
 
+function goToAddAuthorPage($message){        
+    global $header_paths;
+    if(!empty($message)){
+        $message = base64_encode(urlencode($message));        
+        header("Location: ". $header_paths['public'] ."/admin/add_author.php?message=$message");
+    } else{
+        header("Location: ". $header_paths['public'] . '/admin/add_author.php');
+    }
+}
+
 function goToBooksPage($message){        
     global $header_paths;
     if(!empty($message)){

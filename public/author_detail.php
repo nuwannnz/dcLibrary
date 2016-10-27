@@ -111,7 +111,7 @@ if(isset($_SESSION['user_detail'])){
                        
                     echo "<div class=\"clear-fix\"></div>";
                 }else{
-                    echo "<p>There are books by this author yet.</p>";
+                    echo "<p style=\"text-align:center;\">There are no books by this author yet.</p>";
                 }
                     
             ?>
