@@ -1,5 +1,6 @@
 <?php require_once('../../config.php') ?>
 
+
 <?php include_once($paths['include'] . '/logged_in_top.php') ?>
 
 
@@ -96,10 +97,11 @@ if($CurrentUser->image == null){
                
                <?php                
                
-               
+               if(count($bookshelf) > 0){
                //book shelf table
                echo "<table class=\"book-shelf\">";
                 echo "<tr>";
+                    echo "<th>Checkout Id</th>";
                     echo "<th>Cover</th>";
                     echo "<th>Title</th>";
                     echo "<th>Checkout date</th>";
@@ -111,6 +113,11 @@ if($CurrentUser->image == null){
                 
                 foreach ($bookshelf as $bookshelf_entry) {
                     echo "<tr>";
+                        
+                        // checkout id
+                        echo "<td>";
+                            echo "<p style=\"text-align:center\">". $bookshelf_entry->bookCheckout->checkout_id ."</p>";
+                        echo "</td>";
 
                         //cover image
                         echo "<td>";
@@ -178,7 +185,9 @@ if($CurrentUser->image == null){
 
                echo "</table>";
 
-            
+               }else{
+                   echo "<p class=\"center-align-bl center-align-in\" style=\"padding-top:50px;\"> No books in your shelf...</p>";
+               }
                
                ?>
                <script>

@@ -24,15 +24,20 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
 
             //return to the register page.
             goToRegisterPage("Mandatory fields are missing.");
+            exit();
             
         }else if(filter_var($reg_id,FILTER_VALIDATE_INT) === false){
             goToRegisterPage("Register Id should contain only numbers");
+            exit();
         }else if(strlen($status = checkUsername($username)) > 0){
             goToRegisterPage($status);
+            exit();
         }else if(strlen($status = checkPassword($password)) > 0){
             goToRegisterPage($status);
+            exit();
         }else if(strlen($status = checkEmail($email)) > 0){
             goToRegisterPage($status);
+            exit();
         }else{
 
             //now we have sanitized inputs. so it's safer to query MYSQL with them.
@@ -59,6 +64,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
             //check wether we have a one record. If not then redirect to the register page 
             if(mysqli_num_rows($result_select_userId_tblreguser) != 1){
                 goToRegisterPage("Wrong register id");
+                exit();
             }
 
             //check whether the user already hava an online account
@@ -67,6 +73,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
 
             if(mysqli_num_rows($result_select_tbluser) != 0){
                 goToRegisterPage("An online account already exists for the corresponding register id. Please use Sign in page to login.");
+                exit();
             }
 
 
@@ -75,6 +82,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
             $row_select_userId_tblreguser = mysqli_fetch_assoc($result_select_userId_tblreguser);
             if($email != $row_select_userId_tblreguser['email']){
                 goToRegisterPage("Wrong email. You should use the email which you used to register at the library.");
+                exit();
             }
 
             //3.
@@ -84,6 +92,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
 
             if(mysqli_num_rows($result_select_username_tbluser) != 0){
                 goToRegisterPage("Username already exists. Please try another one.");
+                exit();
             }
 
             //4.
@@ -97,8 +106,10 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
 
             if(mysqli_affected_rows($conn) == 1){
                 goToSignInPage("Online account created successfully. Please sign in.");
+                exit();
             }else if(mysqli_affected_rows($conn) == -1){
                 goToRegisterPage("Failed to create an account. Please try again.");
+                exit();
             }
         }
 
@@ -106,6 +117,7 @@ if(isset($_POST['register']) && $_POST['register'] == 'Register'){
 
 }else{    
     goToErrorPage('Unauthorized Access!');
+    exit();
 }
 
 

@@ -9,7 +9,9 @@ endSession();
 if(strlen($_GET['message']) > 0){
     $message = urldecode(base64_decode($_GET['message']));
     goToSignInPage($message);
+    exit();
 }else{
     goToAdminSignInPage('Logged out successfully.');
+    exit();
 }
 ?>

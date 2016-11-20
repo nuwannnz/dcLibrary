@@ -6,7 +6,7 @@
                 <div class="content center-align-bl" style="min-height:80px;" >
 
                     <div class="logo-container" style="margin-top:-24px;">
-                        <a href="homepage.php">
+                        <a href="../homepage.php">
                             <span class="site-font-l logo-large site-accent-fg">dc<span class="site-font-b">Library</span></span>
                         </a>
                     </div> <!-- end of logo container-->

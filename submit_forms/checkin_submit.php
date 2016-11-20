@@ -20,7 +20,10 @@ if(isset($_SESSION['admin_detail'])) {
             goToCheckinsPage("Wrong checkout id");
             exit();
         }       
-        //now we can insert the checkout
+
+        $checkout = mysqli_fetch_assoc($result_select_userid);
+
+        //now we can insert the checkin
         $checkin = new BookCheckin(
             null,
             $_POST['checkoutId'],
@@ -28,7 +31,15 @@ if(isset($_SESSION['admin_detail'])) {
             date("Y-m-d",time())
         );
 
-        if(addNewCheckin($conn,$checkin)){                        
+        if(addNewCheckin($conn,$checkin)){          
+
+            //also we need to update the number of copies of the book
+            $query_update_copies = "UPDATE `book` SET `num_of_copies`=`num_of_copies` + 1 WHERE `isbn`='".$checkout['isbn']."' "; 
+            $result_update_copies = mysqli_query($conn,$query_update_copies);
+
+            
+
+
             goToCheckinsPage();
             exit();    
         }else{

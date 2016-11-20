@@ -48,7 +48,7 @@ if(isset($_SESSION['user_detail'])){
         //clear the temp folder in case we have any junk
         clearTempFolder($full_dir);
         //goToSuccessPage
-        goToSuccessPage();
+        goToSuccessPage();        
     }
 
     //3.
@@ -65,6 +65,7 @@ if(isset($_SESSION['user_detail'])){
 }else{
 
     goToErrorPage("Unauthorized Access!");
+    exit();
 }
 
 function clearTempFolder($dirToClear){
@@ -86,7 +87,7 @@ function goToSuccessPage(){
     if(isset($_POST['onSuccess']) && $_POST['onSuccess'] != ''){
         header("Location:" . $_POST['onSuccess']);
     }else{        
-        header("Location: " . $header_paths['public'] . '/user/logged_in_home.php');
+        header("Location: " . $header_paths['public'] . '/user/my_books.php');
     }
     exit();
 }

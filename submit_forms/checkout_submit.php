@@ -49,6 +49,17 @@ if(isset($_SESSION['admin_detail'])) {
 
             $query_insert_userRead = "INSERT INTO `user_read` (`user_reg_id`, `isbn`, `is_completed`) VALUES ('".$_POST['userId']."', '".$_POST['isbn']."', NULL)"; 
             $result_insert_userRead = mysqli_query($conn,$query_insert_userRead);
+            
+            //also if the user has this book in his book list /wish list we have to remove it
+
+            $query_delete_bookList = "DELETE FROM `user_book_list` WHERE `isbn`='".$_POST['isbn']."' AND `user_reg_id`='".$_POST['userId']."'"; 
+            $result_delete_bookList = mysqli_query($conn,$query_delete_bookList);
+            
+
+            //also we need to update the number of copies of the book 
+            $query_update_copies = "UPDATE `book` SET `num_of_copies`=`num_of_copies` - 1 WHERE `isbn`='".$_POST['isbn']."' "; 
+            $result_update_copies = mysqli_query($conn,$query_update_copies);
+            
             if(mysqli_affected_rows($conn) == 1){
                 goToCheckoutsPage();
                 exit();                 

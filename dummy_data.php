@@ -5,19 +5,39 @@ require_once('config.php');
 require_once($paths['include'] . '/connection.php');
 
 
-//createRegisteredUsers();
-//createUsers();
-//createAdmins();
-//createAuthors();
-//createGenres();
-//createBooks();
-//createBookAuthors();
-//createBookCheckouts();
-//createBookCheckins();
-//createReviews();
-//populateNumOfReads();
-
 $description_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porta ipsum at elit porta, at tempor nulla consectetur. Quisque eget libero ac mauris posuere aliquam nec non eros. Quisque turpis lorem";
+
+//step1();
+//step2();
+//step3();
+//step4();
+
+function step1(){
+    //createRegisteredUsers();
+    //createUsers();
+    //createAdmins();
+}
+
+function step2(){
+    //createAuthors();
+    //createGenres();
+    //createBooks();
+    
+}
+
+function step3(){
+    //createBookAuthors();
+    //createBookCheckouts();
+    //createBookCheckins();
+    
+}
+
+function step4(){
+    //createReviews();
+    //populateNumOfReads();
+    //randomizeUserReads();
+}
+
 
 //this function will create registered users
 function createRegisteredUsers(){
@@ -106,7 +126,7 @@ function createAuthors(){
         $author_lname =$lastNames[array_rand($lastNames)];
         $author_image = "author(".$i.").png";
 
-        $query_insert_tbl_authors = "INSERT INTO `author` (`author_fname`,`author_lname`,`author_description`,`author_image`) VALUES('$author_fname','$author_lname','$description_text','$author_image')";
+        $query_insert_tbl_authors = "INSERT INTO `author` (`author_id`,`author_fname`,`author_lname`,`author_image`) VALUES(NULL,'$author_fname','$author_lname','$author_image')";
 
         $result_insert_tbl_authors = mysqli_query($conn,$query_insert_tbl_authors);
         if(!$result_insert_tbl_authors){
@@ -215,7 +235,7 @@ function createBookAuthors(){
     $i = 0;
     while ($row_select_book = mysqli_fetch_assoc($result_select_book)) {
         $isbn = $row_select_book['isbn'];
-        $author_id = mt_rand(1,26);
+        $author_id = mt_rand(1,25);
         $query_insert_bookAuthor = "INSERT INTO `book_author` (`isbn`,`author_id`) VALUES('$isbn','$author_id')";
 
         $result_insert_bookAuthor = mysqli_query($conn,$query_insert_bookAuthor);
@@ -252,7 +272,7 @@ function createBookCheckouts(){
         $user_reg_id = $reg_user_ids[array_rand($reg_user_ids)];
         $isbn = $isbns[array_rand($isbns)];
         $date = date("Y-m-d", time() -mt_rand(250000 , 500000) );
-        $return_date = date("Y-m-d",time() -mt_rand(100000,200000) );
+        $return_date = date("Y-m-d",time() + 10000 -mt_rand(100000,200000) );
         $is_returned = 0;
 
         $query_insert_bookCheckouts = "INSERT INTO `book_checkout` (`checkout_id`, `admin_id`, `user_reg_id`, `isbn`, `date`, `return_date`, `is_returned`) VALUES (NULL, '$admin_id', '$user_reg_id', '$isbn', '$date', '$return_date', '$is_returned')";
@@ -302,7 +322,12 @@ function createBookCheckins(){
             echo "error in updating checkout";
         }
 
+        $checkout = getAddedCheckout($checkout_id);
+        //delete the user read
+        $query_delete_user_read = "DELETE FROM `user_read` WHERE `user_reg_id`='".$checkout['user_reg_id']."' AND `isbn`='".$checkout['isbn']."' "; 
+        $result_delete_user_read = mysqli_query($conn,$query_delete_user_read);
         
+
 
     }
 }
@@ -322,6 +347,7 @@ function createReviews(){
 
     foreach ($isbns as $isbn ) {
         $i = mt_rand(1,5);
+        $last_userid = 0;
         for ($i=1; $i <=5; $i++) { 
             $userid = $userIds[array_rand($userIds)];
             if($userid == $last_userid) { $userid = $userIds[array_rand($userIds)];}
@@ -446,6 +472,20 @@ function getCheckoutIds(){
     }
 
     return $checkouts;
+}
+
+function getAddedCheckout($id){
+    global $conn;
+
+    $query_select_checkout = "SELECT * FROM `book_checkout` WHERE `checkout_id`='$id'";
+    $result_select_checkout  = mysqli_query($conn,$query_select_checkout);
+
+    
+    $row_select_checkouts = mysqli_fetch_assoc($result_select_checkout);
+    
+    
+
+    return $row_select_checkouts;
 }
 
 function removeElementFromArray(&$array ,$element){

@@ -4,8 +4,8 @@
 This file contains all the global data for the rest of application.
 */
 
-$root = $_SERVER['DOCUMENT_ROOT'] . "/dashboard/diwe_final/site";
-$project_root = "/dashboard/diwe_final/site";
+$project_root = "/dashboard/diwe_final/site-Copy";
+$root = $_SERVER['DOCUMENT_ROOT'] . $project_root;
 
 $paths = array(
     "images" =>  $root . "/images",
@@ -37,7 +37,7 @@ $database = array(
     "hostname" => "127.0.0.1",
     "username" => "root",
     "password" => "",
-    "database" => "dc_library",
+    "database" => "dc_library_copy",
 );
 
 

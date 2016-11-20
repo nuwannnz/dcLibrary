@@ -1,3 +1,5 @@
+
+//ajax to get search results for checkouts
 function onFilter(filterText){
     if(filterText.length >0){
         var xmlhttp = new XMLHttpRequest();
@@ -27,6 +29,7 @@ function onFilter(filterText){
     }
 }
 
+//ajax to get search results for checkins
 function onFilterCheckin(filterText){
     if(filterText.length >0){
         var xmlhttp = new XMLHttpRequest();

@@ -56,7 +56,10 @@ if(isset($_SESSION['user_detail'])){
  if(isset($_GET['id'])){
 
     $CurrentAuthor = getAuthor($conn,$_GET['id']);
-    
+    if($CurrentAuthor == null){
+        header("Location: " . $header_paths['public'] .'/all_authors.php');
+        exit();   
+    }
  }else{
      header("Location: " . $header_paths['public'] .'/all_authors.php');
      exit();

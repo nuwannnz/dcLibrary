@@ -24,9 +24,11 @@ if(isset($_SESSION['user_detail']) && isset($_POST['status'])) {
     }
     
     goToMyBooksPage(2);
+    exit();
 
 }else{
         goToErrorPage("Unauthorized Access");
+        exit();
     }
 
 

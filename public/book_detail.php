@@ -56,6 +56,10 @@ if(isset($_SESSION['user_detail'])){
  if(isset($_GET['isbn'])){
 
     $CurrentBook = getBook($conn,$_GET['isbn']);
+    if($CurrentBook == null){
+        header("Location:" .$header_paths['public'] . '/explore_books.php');
+        exit();   
+    }
     
  }else{
      header("Location:" .$header_paths['public'] . '/explore_books.php');
@@ -81,14 +85,16 @@ if(isset($_SESSION['user_detail'])){
             <img class="book-cover float-left" src="<?php echo $coverImagePath; ?>" alt="Cover image of the book.">
             <div class="book-text-container float-left" style="position:relative;" >
                 <span class="title text-wrap"><?php echo $CurrentBook->title ?></span>
-                <span class="author text-wrap">by
+                <span class="author text-wrap">
                     <?php 
-                    
-                    foreach($CurrentBook->author_ids as $author_id){
-                        $author = getAuthor($conn,$author_id);
-                        echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
-                        if(count($CurrentBook->author_ids)>0 ){
-                            echo "&nbsp&nbsp"; 
+                    if(sizeof($CurrentBook->author_ids) > 0){
+                        echo "by &nbsp";
+                        foreach($CurrentBook->author_ids as $author_id){
+                            $author = getAuthor($conn,$author_id);                        
+                            echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
+                            if(count($CurrentBook->author_ids)>0 ){
+                                echo "&nbsp&nbsp"; 
+                            }
                         }
                     }
                     
@@ -100,19 +106,12 @@ if(isset($_SESSION['user_detail'])){
                 <span class="genre text-wrap"> 
                     <?php 
                         $genre = getGenre($conn,$CurrentBook->genre_id);
-                        echo "<a href=\"#\">" . $genre->name . "</a>"
+                        echo  $genre->name;
                     ?>
                 </span>
 
                 <div class="rating-container" >
-                   <!-- <span id="star1" class="rating-star-selected" style="display:inline-block;"></span>
-                    <span id="star2" class="rating-star-selected" style="display:inline-block;"></span>
-                    <span id="star3" class="rating-star" style="display:inline-block;"></span>
-                    <span id="star4" class="rating-star" style="display:inline-block;"></span>
-                    <span id="star5" class="rating-star" style="display:inline-block;"></span> 
-                    <span style="display:inline-block;"> </span>
-                    <span id="starValue" style="display:inline-block;vertical-align:top;margin-top:1px;" ><?php echo getRatingForBook($conn,$CurrentBook->isbn); ?></span>
-                    -->
+                  
                     <?php echo  getRatingStars(getRatingForBook($conn,$CurrentBook->isbn)); ?>                   
                 </div>
             </div>
@@ -282,7 +281,7 @@ if(isset($_SESSION['user_detail'])){
                 </td>
                 <td>
                     <!-- name-->
-                    <span><?php echo $CurrentUser->getFName(); ?></span>
+                    <span><?php print($CurrentUser == null ? '' : $CurrentUser->getFName()); ?></span>
                 </td>
             </tr>
             <tr>

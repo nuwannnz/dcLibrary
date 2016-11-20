@@ -1,4 +1,5 @@
 <?php 
+//functions to validate user data
 
 function checkPassword($password){
     if(strlen($password) < 6){

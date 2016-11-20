@@ -133,13 +133,18 @@ function getAuthor($conn,$id){
 
     $query_select_author = "SELECT * FROM `author` WHERE `author_id`='$id'"; 
     $result_select_author = mysqli_query($conn,$query_select_author);
-    $row_select_author = mysqli_fetch_assoc($result_select_author); 
-    $author = new Author(
-        $id,
-        $row_select_author['author_fname'],
-        $row_select_author['author_lname'],
-        $row_select_author['author_image']
-    );
+    if(mysqli_num_rows($result_select_author) == 1){
+
+        $row_select_author = mysqli_fetch_assoc($result_select_author);
+        $author = new Author(
+            $id,
+            $row_select_author['author_fname'],
+            $row_select_author['author_lname'],
+            $row_select_author['author_image']
+        );
+    } else{
+        return null;
+    }
     
     return $author;
   
@@ -283,28 +288,45 @@ function deleteBook($conn,$isbn){
     //delete from book table
     $query_delete_book = "DELETE FROM `book` WHERE `isbn`='$isbn'"; 
     $result_delete_book = mysqli_query($conn,$query_delete_book);
-    if(mysqli_affected_rows($conn) == 1){
+    //if(mysqli_affected_rows($conn) == 1){
+    //    //delete from book_author table
+    //    $query_delete_bookAuthor = "DELETE FROM `book_author` WHERE `isbn`='$isbn'"; 
+    //    $result_delete_bookAuthor = mysqli_query($conn,$query_delete_bookAuthor);
+    //    if(mysqli_affected_rows($conn) >= 0){
+    //         $query_delete_bookReview = "DELETE FROM `review` WHERE `isbn`='$isbn' "; 
+    //         $result_delete_bookReview = mysqli_query($conn,$query_delete_bookReview);
+    //         if(mysqli_affected_rows($conn) >= 0){
+    //              $query_delete_user_Book = "DELETE FROM `user_book_list` WHERE `isbn`='$isbn'"; 
+    //              $result_delete_user_Book = mysqli_query($conn,$query_delete_user_Book);
+    //              if(mysqli_affected_rows($conn) >= 0){
+    //                   return true;
+    //              }else{
+    //                  return false;
+    //              }
+    //         }
+    //    }else{
+    //        return false;
+    //    }
+    //}else{
+    //    return false;        
+    //}
+
+    
         //delete from book_author table
         $query_delete_bookAuthor = "DELETE FROM `book_author` WHERE `isbn`='$isbn'"; 
         $result_delete_bookAuthor = mysqli_query($conn,$query_delete_bookAuthor);
-        if(mysqli_affected_rows($conn) != 1){
+
+        
              $query_delete_bookReview = "DELETE FROM `review` WHERE `isbn`='$isbn' "; 
              $result_delete_bookReview = mysqli_query($conn,$query_delete_bookReview);
-             if(mysqli_affected_rows($conn) != 1){
+        
+        
                   $query_delete_user_Book = "DELETE FROM `user_book_list` WHERE `isbn`='$isbn'"; 
                   $result_delete_user_Book = mysqli_query($conn,$query_delete_user_Book);
-                  if(mysqli_affected_rows($conn) != 1){
-                       return true;
-                  }else{
-                      return false;
-                  }
-             }
-        }else{
-            return false;
-        }
-    }else{
-        return false;        
-    }
+                  return true;
+             
+        
+
 
 }
 

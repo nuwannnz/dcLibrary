@@ -24,7 +24,7 @@ function loadPic(event){
 }
 
 
-
+//ajax to upload the profile pic
 function loadAjax(formDataObj){
     var image = document.getElementById('preview-image');
     var uploadButton = document.getElementById('upload-button');

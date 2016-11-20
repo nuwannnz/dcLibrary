@@ -1,6 +1,8 @@
 
 <?php 
 
+// this script contains helper functions to generate repititive html
+
 function getRatingStars($rating){
 $s = "rating-star-selected";
 $n = "rating-star";
@@ -71,15 +73,16 @@ function printBookMoreDetail($book){
                     echo "<tr>";
                         //authors
                         echo "<td style=\"height:30px;\">";
-                        echo "<span class=\"author text-wrap\" style=\"font-size:14px\">by&nbsp";
-                                    
-                        foreach($book->author_ids as $author_id){
-                            $author = getAuthor($conn,$author_id);
-                            echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
-                            if(count($book->author_ids)>1 ){
-                                echo ", &nbsp <br>"; 
+                        if(count($book->author_ids) > 0){
+                            echo "<span class=\"author text-wrap\" style=\"font-size:14px\">by&nbsp";
+                            foreach($book->author_ids as $author_id){
+                                $author = getAuthor($conn,$author_id);
+                                echo "<a href=\"".$header_paths['public'] . '/author_detail.php?id='. $author_id ."\" >".ucfirst($author->fname) ." ". ucfirst($author->lname) . "</a>";
+                                if(count($book->author_ids)>1 ){
+                                    echo ", &nbsp <br>"; 
+                                }
                             }
-                        }
+                        }                                    
                                       
                         echo "</span>";
                         echo "</td>";

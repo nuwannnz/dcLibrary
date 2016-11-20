@@ -2,13 +2,13 @@
 
 <?php 
 
-include_once($paths['functions'] . '/session_helpers.php');
 include_once($paths['models'] . '/User.php');
 include_once($paths['include'] . '/connection.php');
 include_once($paths['functions'] . '/db_helper.php');
+include_once($paths['functions'] . '/session_helpers.php');
 include_once($paths['functions'] . '/html_helper.php');
 
-include_once('../dummy_data.php');
+
 
 checkSession();
 
